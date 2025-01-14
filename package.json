@@ -1,0 +1,32 @@
+{
+  "name": "hyperfluid",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "workspaces": [
+    "examples/*",
+    "packages/*"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --no-cache --parallel --continue",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "publish-packages": "changeset version && changeset publish"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@changesets/cli": "^2.27.11",
+    "prettier": "latest",
+    "rollup-plugin-cleanup": "^3.2.1",
+    "turbo": "latest"
+  },
+  "packageManager": "pnpm@9.14.2"
+}
