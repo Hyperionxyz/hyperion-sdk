@@ -1,7 +1,7 @@
 "use client";
 
 import { AptosClient } from "@/lib/utils";
-import { Download, LoaderCircle } from "lucide-react";
+import { BookCheck, Download, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { APILabel } from "./APILabel";
@@ -13,10 +13,12 @@ export default function APIViewSection({
   api,
   apiParams,
   label,
+  docUrl,
 }: {
   api: (params?: any) => any;
   apiParams?: any;
   label: string;
+  docUrl?: string;
 }) {
   const [data, setData] = useState<any>();
   const [viewData, setViewData] = useState<any>();
@@ -52,9 +54,16 @@ export default function APIViewSection({
   };
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex flex-col gap-2 hover:bg-black/10 p-2 rounded-md transition-all'>
       <div className='flex items-center justify-between gap-2'>
-        <APILabel>{label}</APILabel>
+        <APILabel>
+          {label}
+          {docUrl && (
+            <a href={docUrl} target='_blank' className='text-green-700'>
+              <BookCheck size={14} />
+            </a>
+          )}
+        </APILabel>
 
         <div className='flex items-center gap-2'>
           <ParamInSection apiParams={apiParams} />

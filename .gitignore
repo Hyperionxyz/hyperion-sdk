@@ -23,6 +23,9 @@ build
 .DS_Store
 *.pem
 
+# npm
+.npmrc
+
 # debug
 npm-debug.log*
 yarn-debug.log*

@@ -12,7 +12,7 @@ export const RewardFragment = `
 
 export enum REWARD_TYPE {
   "FEE",
-  "SUBSIDY",
+  "FARM",
 }
 
 export const QueryClaimedFee = gql`
@@ -25,7 +25,7 @@ export const QueryClaimedFee = gql`
 
 export const QueryClaimedRewards = gql`
   query queryClaimedRewards($objectId: String = "", $ownerAddress:String = "") {
-    rewardStatement(where: { objectId: { _eq: $objectId }, ownerAddress: {_eq: $ownerAddress}, type: { _eq: ${REWARD_TYPE.SUBSIDY} } }) {
+    rewardStatement(where: { objectId: { _eq: $objectId }, ownerAddress: {_eq: $ownerAddress}, type: { _eq: ${REWARD_TYPE.FARM} } }) {
       ${RewardFragment} 
     }
   }

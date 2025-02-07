@@ -1,3 +1,4 @@
+import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
 import Pool from "./modules/poolModule";
 import { Position } from "./modules/positionModule";
 import { RequestModule } from "./modules/requestModule";
@@ -12,6 +13,7 @@ export * from "./utils";
 // Position
 
 export type SDKOptions = {
+  network: Network;
   // Hyperfluid Contract Address
   contractAddress: string;
   // Hyperfluid Fullnode Indexer URL
@@ -33,6 +35,8 @@ export class HyperfluidSDK {
 
   protected _reward: Reward;
 
+  protected _aptosClient: Aptos;
+
   constructor(opt: SDKOptions) {
     this._options = opt;
 
@@ -45,6 +49,11 @@ export class HyperfluidSDK {
     this._position = new Position(this);
     this._swap = new Swap(this);
     this._reward = new Reward(this);
+    this._aptosClient = new Aptos(
+      new AptosConfig({
+        network: this._options.network,
+      })
+    );
   }
 
   get Pool() {
@@ -61,6 +70,10 @@ export class HyperfluidSDK {
 
   get Reward() {
     return this._reward;
+  }
+
+  get AptosClient() {
+    return this._aptosClient;
   }
 
   get sdkOptions() {

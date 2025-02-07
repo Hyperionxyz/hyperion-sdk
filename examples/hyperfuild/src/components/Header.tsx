@@ -16,9 +16,11 @@ export function Header() {
   const { account, disconnect, connect, wallets } = useWallet();
 
   return (
-    <div className='flex flex-row justify-between items-center px-4 shadow-sm fixed w-full bg-white/40 backdrop-blur-sm h-[60px] top-0'>
+    <div className='flex flex-row justify-between items-center px-4 shadow-sm fixed w-full bg-white/40 backdrop-blur-sm h-[60px] top-0 z-1'>
       <div className='flex flex-row items-center gap-1'>
-        <h1 className='text-2xl font-bold'>Hyperfluid SDK Demo</h1>
+        <h1 className='text-2xl font-bold drop-shadow-[1px_-1px_white]'>
+          Hyperfluid SDK Demo
+        </h1>
         <Badge>Testnet</Badge>
       </div>
 

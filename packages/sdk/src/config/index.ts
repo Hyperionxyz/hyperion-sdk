@@ -6,15 +6,17 @@ interface InitHyperfluidOptions {
 }
 
 const TESTNET_CONFIG: SDKOptions = {
+  network: Network.TESTNET,
   contractAddress:
-    "0xdd8d1a676801c6789fac9a06b8f6ced76f766c798f7e5ea276f25d80b9aa0af0",
+    "0x6a582a31e79c2139918b810de8c6a2f46d2c1c8b8500fb7dbe7918a26d75e13a",
   hyperfluidFullnodeIndexerURL: "https://api-testnet.hyperfluid.xyz/v1/graphql",
   officialFullnodeIndexerURL: "https://api.testnet.aptoslabs.com/v1/graphql",
 };
 
 const MAINNET_CONFIG: SDKOptions = {
+  network: Network.MAINNET,
   contractAddress:
-    "0x0debef4d61b6af92fa0ee64fe3ddb5bb2782eca01950ad66c88db40411958725",
+    "0x8b4a2c4bb53857c718a04c020b98f8c2e1f99a68b0f57389a8bf5434cd22e05c",
   hyperfluidFullnodeIndexerURL: "https://api.hyperfluid.xyz/v1/graphql",
   officialFullnodeIndexerURL: "https://api.mainnet.aptoslabs.com/v1/graphql",
 };

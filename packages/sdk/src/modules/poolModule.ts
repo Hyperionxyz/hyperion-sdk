@@ -20,12 +20,29 @@ export interface CreatePoolTransactionPayloadArgs {
   currencyB: string;
   currencyAAmount: number | string;
   currencyBAmount: number | string;
-  feeRateTier: number | string;
+  feeTierIndex: number | string;
   currentPriceTick: number | string;
-  tickerLower: number | string;
-  tickerUpper: number | string;
+  tickLower: number | string;
+  tickUpper: number | string;
   slippage: number | string;
 }
+
+export interface EstAmountArgs {
+  currencyA: string;
+  currencyB: string;
+  feeTierIndex: number | string;
+  tickLower: number | string;
+  tickUpper: number | string;
+  currentPriceTick: number | string;
+}
+
+export type EstCurrencyAAmountArgs = EstAmountArgs & {
+  currencyBAmount: number | string;
+};
+
+export type EstCurrencyBAmountArgs = EstAmountArgs & {
+  currencyAAmount: number | string;
+};
 
 export default class Pool {
   protected _sdk: HyperfluidSDK;
@@ -51,7 +68,6 @@ export default class Pool {
     return ret?.api?.getPoolStat || [];
   }
 
-  // TODO: fetch pool by ids
   // TODO: fetch pool by tokenPair Addresses and fee rate
 
   /**
@@ -75,10 +91,10 @@ export default class Pool {
     );
 
     const params = [
-      BigNumber(args.feeRateTier).toNumber(),
+      BigNumber(args.feeTierIndex).toNumber(),
       POOL_STABLE_TYPE,
-      tickComplement(args.tickerLower),
-      tickComplement(args.tickerUpper),
+      tickComplement(args.tickLower),
+      tickComplement(args.tickUpper),
       tickComplement(args.currentPriceTick),
       ...currencyAmounts,
       ...currencyAmountsAfterSlippage,
@@ -90,8 +106,8 @@ export default class Pool {
     [paramsReverse[7], paramsReverse[8]] = [paramsReverse[8], paramsReverse[7]];
 
     [paramsReverse[2], paramsReverse[3], paramsReverse[4]] = [
-      tickComplement(BigNumber(args.tickerUpper).times(-1).toNumber()),
-      tickComplement(BigNumber(args.tickerLower).times(-1).toNumber()),
+      tickComplement(BigNumber(args.tickUpper).times(-1).toNumber()),
+      tickComplement(BigNumber(args.tickLower).times(-1).toNumber()),
       tickComplement(BigNumber(args.currentPriceTick).times(-1).toNumber()),
     ];
 
@@ -132,5 +148,50 @@ export default class Pool {
       },
     });
     return ret?.api?.getLiquidityAccumulation || [];
+  }
+
+  // TODO: return data type in docs
+  // [number_a, number_b]
+  async estCurrencyAAmountFromB(args: EstCurrencyAAmountArgs) {
+    const payload: any = {
+      function: `${this._sdk.sdkOptions.contractAddress}::router_v3::optimal_liquidity_amounts_from_b`,
+      typeArguments: [],
+      functionArguments: [
+        tickComplement(args.tickLower),
+        tickComplement(args.tickUpper),
+        tickComplement(args.currentPriceTick),
+        args.currencyA,
+        args.currencyB,
+        args.feeTierIndex,
+        args.currencyBAmount,
+        0,
+        0,
+      ],
+    };
+
+    console.log(payload);
+
+    return await this._sdk.AptosClient.view({ payload });
+  }
+
+  async estCurrencyBAmountFromA(args: EstCurrencyBAmountArgs) {
+    const payload: any = {
+      function: `${this._sdk.sdkOptions.contractAddress}::router_v3::optimal_liquidity_amounts_from_a`,
+      typeArguments: [],
+      functionArguments: [
+        // fixed tick order
+        tickComplement(args.tickLower),
+        tickComplement(args.tickUpper),
+        tickComplement(args.currentPriceTick),
+        args.currencyA,
+        args.currencyB,
+        args.feeTierIndex,
+        args.currencyAAmount,
+        0,
+        0,
+      ],
+    };
+
+    return await this._sdk.AptosClient.view({ payload });
   }
 }

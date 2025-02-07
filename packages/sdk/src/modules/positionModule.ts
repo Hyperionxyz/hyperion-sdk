@@ -15,17 +15,17 @@ import {
 } from "../utils";
 import { QueryClaimedFee } from "./../config/queries/reward.query";
 
-export interface AddLiquidityPayloadArgs {
+export interface AddLiquidityTransactionPayloadArgs {
   positionId: string;
   currencyA: string;
   currencyB: string;
   currencyAAmount: number | string;
   currencyBAmount: number | string;
   slippage: number | string;
-  feeRateTier: number | string;
+  feeTierIndex: number | string;
 }
 
-export interface RemoveLiquidityPayloadArgs {
+export interface RemoveLiquidityTransactionPayloadArgs {
   positionId: string;
   currencyA: string;
   currencyB: string;
@@ -85,20 +85,22 @@ export class Position {
     });
   }
 
-  async fetchFeePayload({ positionId }: { positionId: string }) {
-    return {
-      function: `${this._sdk.sdkOptions.contractAddress}::pool_v3::get_pending_fees`,
-      typeArguments: [],
-      functionArguments: [positionId],
-    };
-  }
+  // async fetchFeePayload({ positionId }: { positionId: string }) {
+  //   return {
+  //     function: `${this._sdk.sdkOptions.contractAddress}::pool_v3::get_pending_fees`,
+  //     typeArguments: [],
+  //     functionArguments: [positionId],
+  //   };
+  // }
 
   /**
    * Adds liquidity to a liquidity pool
    *
    * This method is used to add liquidity to a liquidity pool.
    */
-  async addLiquidityPayload(args: AddLiquidityPayloadArgs) {
+  async addLiquidityTransactionPayload(
+    args: AddLiquidityTransactionPayloadArgs
+  ) {
     currencyCheck(args);
     slippageCheck(args);
 
@@ -114,7 +116,7 @@ export class Position {
     );
 
     const params = [
-      BigNumber(args.feeRateTier).toNumber(),
+      BigNumber(args.feeTierIndex).toNumber(),
       POOL_STABLE_TYPE,
       ...currencyAmounts,
       ...currencyAmountsAfterSlippage,
@@ -158,7 +160,11 @@ export class Position {
    *
    * This method is used to remove liquidity from a liquidity pool.
    */
-  removeLiquidityPayload(args: RemoveLiquidityPayloadArgs) {
+  removeLiquidityTransactionPayload(
+    args: RemoveLiquidityTransactionPayloadArgs
+  ) {
+    console.log(args);
+
     currencyCheck(args);
     slippageCheck(args);
 
@@ -211,7 +217,7 @@ export class Position {
     ]);
   }
 
-  claimFeePayload({
+  claimFeeTransactionPayload({
     positionId,
     recipient,
   }: {
@@ -223,5 +229,39 @@ export class Position {
       typeArguments: [],
       functionArguments: [[positionId], recipient],
     };
+  }
+
+  claimRewardTransactionPayload({
+    positionId,
+    recipient,
+  }: {
+    positionId: string;
+    recipient: string;
+  }) {
+    return {
+      function: `${this._sdk.sdkOptions.contractAddress}::router_v3::claim_rewards`,
+      typeArguments: [],
+      functionArguments: [positionId, recipient],
+    };
+  }
+
+  /**
+   *
+   * @param positionId
+   *
+   * @returns [currencyAAmount, currencyBAmount]
+   */
+  async fetchTokensAmountByPositionId({ positionId }: { positionId: string }) {
+    const payload: any = {
+      function: `${this._sdk.sdkOptions.contractAddress}::router_v3::get_amount_by_liquidity`,
+      typeArguments: [],
+      functionArguments: [positionId],
+    };
+
+    const ret: any = await this._sdk.AptosClient.view({
+      payload,
+    });
+
+    return ret;
   }
 }

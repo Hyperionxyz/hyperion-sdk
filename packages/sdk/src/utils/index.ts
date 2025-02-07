@@ -1,4 +1,3 @@
-import { AccountAddress } from "@aptos-labs/ts-sdk";
 import BigNumber from "bignumber.js";
 import Long from "long";
 
@@ -8,6 +7,9 @@ export const tickComplement = (tick: number | string) => {
 };
 
 export const BASE = 1.0001;
+export const logBase = (number: number | string | BigNumber): number => {
+  return Math.log(new BigNumber(number).toNumber()) / Math.log(BASE);
+};
 
 // seconds after 100 years
 export const poolDeadline = () => {
@@ -24,6 +26,7 @@ export enum FeeTierIndex {
 }
 export const FeeTierItems = ["1", "5", "30", "100"];
 export const FeeTierStep = [1, 10, 60, 200];
+export const u64Max = 184467440737095516;
 export const roundTickBySpacing = (
   tick: number | string,
   feeTierIndex: number
@@ -37,8 +40,50 @@ export const roundTickBySpacing = (
     .toString();
 };
 
-export const POOL_STABLE_TYPE = false;
+/**
+ *
+ * @param price
+ * @param feeTierIndex
+ * @param decimalsRatio Math.pow(10, currencyADecimals - currencyBDecimals)
+ *
+ * @returns
+ */
+export const priceToTick = ({
+  price,
+  feeTierIndex,
+  decimalsRatio,
+}: {
+  price: string | number | BigNumber;
+  feeTierIndex: FeeTierIndex;
+  decimalsRatio: number;
+}) => {
+  const ret = logBase(new BigNumber(price).div(decimalsRatio));
+  if (isNaN(ret)) return null;
 
+  return BigNumber(ret).lt(0)
+    ? BigNumber.max(
+        roundTickBySpacing(ret, feeTierIndex),
+        roundTickBySpacing(LOWEST_TICK, feeTierIndex)
+      )
+    : BigNumber.min(
+        roundTickBySpacing(ret, feeTierIndex),
+        roundTickBySpacing(HIGHEST_TICK, feeTierIndex)
+      );
+};
+
+export const tickToPrice = ({
+  tick,
+  decimalsRatio,
+}: {
+  tick: number | string | BigNumber;
+  decimalsRatio: number;
+}) => {
+  return new BigNumber(Math.pow(BASE, new BigNumber(tick).dp(0).toNumber()))
+    .times(decimalsRatio)
+    .toString();
+};
+
+export const POOL_STABLE_TYPE = false;
 export const currencyCheck = (args: {
   currencyA: string;
   currencyB: string;
@@ -49,14 +94,7 @@ export const currencyCheck = (args: {
     );
   }
 
-  if (
-    !AccountAddress.isValid({
-      input: args.currencyA,
-    }).valid ||
-    !AccountAddress.isValid({
-      input: args.currencyB,
-    }).valid
-  ) {
+  if (!args.currencyA.startsWith("0x") || !args.currencyB.startsWith("0x")) {
     throw new Error(
       "currencyA and currencyB must be valid aptos account/token address"
     );

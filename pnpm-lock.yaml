@@ -106,7 +106,7 @@ importers:
   packages/sdk:
     dependencies:
       '@aptos-labs/ts-sdk':
-        specifier: latest
+        specifier: ^1.33.1
         version: 1.33.1
       aptos-tool:
         specifier: ^0.0.8

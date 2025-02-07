@@ -34,10 +34,11 @@ export const PoolInfoFragment = `
 
 export const PoolStatFragment = `
   id
-  aprUSD
   dailyVolumeUSD
   feesUSD
   tvlUSD
+  feeAPR
+  farmAPR
   pool {
     ${PoolInfoFragment} 
   }
@@ -100,7 +101,7 @@ export const QueryAllPositionByAddress = gql`
       getPositionStatsByAddress(address: $address) {
         isActive
         value
-        subsidy {
+        farm {
           ${Claimed} 
           ${Unclaimed}
         }

@@ -1,9 +1,20 @@
 "use client";
+import { useCallback } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 export default function ParamInSection({ apiParams }: { apiParams: any }) {
+  const contentHandler = useCallback((value: any): string | Array<any> => {
+    const v: string = value?.trim();
+    if (v.includes(",")) {
+      return v.split(",").map((v: any) => {
+        return contentHandler(v);
+      });
+    }
+    return v;
+  }, []);
+
   return (
     apiParams && (
       <Popover>
@@ -21,7 +32,7 @@ export default function ParamInSection({ apiParams }: { apiParams: any }) {
                   id={key}
                   defaultValue={apiParams[key]}
                   onChange={(e) => {
-                    apiParams[key] = e.target.value;
+                    apiParams[key] = contentHandler(e.target.value);
                   }}
                   className='h-8'
                 />

@@ -18,7 +18,7 @@ export class Reward {
   }
 
   /**
-   * Fetch the history of Fee Subsidy claim
+   * Fetch the history of Fee Farm claim
    *
    * @param args
    * @returns
