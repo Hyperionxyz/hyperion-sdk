@@ -1,4 +1,4 @@
-import { HyperfluidSDKProvider } from "@/components/HyperfluidSDKProvider";
+import { HyperionSDKProvider } from "@/components/HyperionSDKProvider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hyperfluid SDK Demo",
-  description: "Hyperfluid SDK Demo",
+  title: "Hyperion SDK Demo",
+  description: "Hyperion SDK Demo",
 };
 
 export default function RootLayout({
@@ -30,9 +30,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <HyperfluidSDKProvider>
+        <HyperionSDKProvider>
           <WalletProvider>{children}</WalletProvider>
-        </HyperfluidSDKProvider>
+        </HyperionSDKProvider>
         <Toaster />
       </body>
     </html>

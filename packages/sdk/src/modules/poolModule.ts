@@ -1,6 +1,6 @@
 import { TokenPairs } from "aptos-tool";
 import BigNumber from "bignumber.js";
-import { HyperfluidSDK } from "..";
+import { HyperionSDK } from "..";
 import {
   QueryAllPools,
   QueryPoolById,
@@ -45,8 +45,8 @@ export type EstCurrencyBAmountArgs = EstAmountArgs & {
 };
 
 export default class Pool {
-  protected _sdk: HyperfluidSDK;
-  constructor(sdk: HyperfluidSDK) {
+  protected _sdk: HyperionSDK;
+  constructor(sdk: HyperionSDK) {
     this._sdk = sdk;
   }
 

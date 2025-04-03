@@ -1,7 +1,7 @@
 import { AccountAddress } from "@aptos-labs/ts-sdk";
 import { TokenPairs } from "aptos-tool";
 import BigNumber from "bignumber.js";
-import { HyperfluidSDK } from "..";
+import { HyperionSDK } from "..";
 import {
   QueryAllPositionByAddress,
   QueryPoolInfoByObjectId,
@@ -38,9 +38,9 @@ export interface RemoveLiquidityTransactionPayloadArgs {
 }
 
 export class Position {
-  protected _sdk: HyperfluidSDK;
+  protected _sdk: HyperionSDK;
 
-  constructor(sdk: HyperfluidSDK) {
+  constructor(sdk: HyperionSDK) {
     this._sdk = sdk;
   }
 

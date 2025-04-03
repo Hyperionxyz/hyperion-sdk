@@ -48,7 +48,7 @@ export const QueryAllPools = gql`
   query queryAllPools {
     api {
       getPoolStat {
-		${PoolStatFragment}
+		    ${PoolStatFragment}
       }
     }
   }
@@ -58,7 +58,7 @@ export const QueryPoolById = gql`
   query queryPoolById($poolId: String = "") {
     api {
       getPoolStat(poolId: $poolId) {
-		${PoolStatFragment}	
+	    	${PoolStatFragment}	
       }
     }
   }

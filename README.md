@@ -1,1 +1,1 @@
-# @hyperfluid/hyperfluid-sdk
+# @hyperion/hyperion-sdk

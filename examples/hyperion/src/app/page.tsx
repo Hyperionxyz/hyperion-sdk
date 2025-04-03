@@ -2,20 +2,20 @@
 
 import APIGetSection from "@/components/APIGetSection";
 import APIPostSection from "@/components/APIPostSection";
-import { useHyperfluidSDK } from "@/components/HyperfluidSDKProvider";
+import { useHyperionSDK } from "@/components/HyperionSDKProvider";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { FeeTierIndex, priceToTick, roundTickBySpacing } from "@hyperfluid/sdk";
+import { FeeTierIndex, priceToTick, roundTickBySpacing } from "@hyperion/sdk";
 import { useEffect, useState } from "react";
 import { Header } from "../components/Header";
 
 export default function Home() {
-  const { SDK } = useHyperfluidSDK();
+  const { SDK } = useHyperionSDK();
   const { account } = useWallet();
   const feeTierIndex = FeeTierIndex["PER_0.05_SPACING_5"];
   const positionId = "";
   const [accountAddress, setAccountAddress] = useState("");
   const DocURL =
-    "https://hyperfluid.gitbook.io/hyperfluid-docs/developer/via-sdk/features-available/";
+    "https://hyperfluid.gitbook.io/hyperion-docs/developer/via-sdk/features-available/";
 
   useEffect(() => {
     setAccountAddress(account?.address || "");

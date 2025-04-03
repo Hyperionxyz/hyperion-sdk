@@ -1,5 +1,5 @@
 import { TokenPairs } from "aptos-tool";
-import { HyperfluidSDK } from "..";
+import { HyperionSDK } from "..";
 import { QuerySwapAmount } from "../config/queries/swap.query";
 import { currencyCheck, slippageCalculator, slippageCheck } from "../utils";
 
@@ -20,9 +20,9 @@ export interface EstFromAmountArgs {
 }
 
 export class Swap {
-  protected _sdk: HyperfluidSDK;
+  protected _sdk: HyperionSDK;
 
-  constructor(sdk: HyperfluidSDK) {
+  constructor(sdk: HyperionSDK) {
     this._sdk = sdk;
   }
 

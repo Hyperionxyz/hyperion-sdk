@@ -11,3 +11,8 @@ export const AptosClient = new Aptos(
     network: Network.TESTNET,
   })
 );
+
+export const copy = (text: string) => {
+  navigator.clipboard.writeText(text);
+  alert("Copied");
+};

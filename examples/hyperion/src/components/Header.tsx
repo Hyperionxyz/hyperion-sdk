@@ -7,6 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { copy } from "@/lib/utils";
 import { useWallet, WalletName } from "@aptos-labs/wallet-adapter-react";
 import { Utils } from "aptos-tool";
 import { Copy, LogOut } from "lucide-react";
@@ -16,10 +17,10 @@ export function Header() {
   const { account, disconnect, connect, wallets } = useWallet();
 
   return (
-    <div className='flex flex-row justify-between items-center px-4 shadow-sm fixed w-full bg-white/40 backdrop-blur-sm h-[60px] top-0 z-1'>
+    <div className='flex flex-row justify-between items-center px-4 shadow-sm fixed w-full bg-white/40 backdrop-blur-sm h-[60px] top-0 z-[1]'>
       <div className='flex flex-row items-center gap-1'>
         <h1 className='text-2xl font-bold drop-shadow-[1px_-1px_white]'>
-          Hyperfluid SDK Demo
+          Hyperion SDK Demo
         </h1>
         <Badge>Testnet</Badge>
       </div>
@@ -34,7 +35,7 @@ export function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className='text-xs'>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => copy(account?.address)}>
                   <Copy size={14} />
                   Copy Address
                 </DropdownMenuItem>

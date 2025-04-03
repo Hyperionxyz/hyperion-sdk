@@ -35,7 +35,7 @@ export const roundTickBySpacing = (
   // always towards zero
   return new BigNumber(tick)
     .div(currentStep)
-    .dp(0, BigNumber.ROUND_DOWN)
+    .dp(0, BigNumber.ROUND_UP)
     .times(currentStep)
     .toString();
 };

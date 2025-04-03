@@ -14,15 +14,15 @@ export * from "./utils";
 
 export type SDKOptions = {
   network: Network;
-  // Hyperfluid Contract Address
+  // Hyperion Contract Address
   contractAddress: string;
-  // Hyperfluid Fullnode Indexer URL
-  hyperfluidFullnodeIndexerURL: string;
+  // Hyperion Fullnode Indexer URL
+  hyperionFullnodeIndexerURL: string;
   // Official Fullnode Indexer URL
   officialFullnodeIndexerURL: string;
 };
 
-export class HyperfluidSDK {
+export class HyperionSDK {
   protected _options: SDKOptions;
 
   protected _requestModule: RequestModule;
@@ -41,7 +41,7 @@ export class HyperfluidSDK {
     this._options = opt;
 
     this._requestModule = new RequestModule({
-      indexerURL: this._options.hyperfluidFullnodeIndexerURL,
+      indexerURL: this._options.hyperionFullnodeIndexerURL,
       officialIndexerURL: this._options.officialFullnodeIndexerURL,
     });
 

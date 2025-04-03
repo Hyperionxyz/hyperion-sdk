@@ -1,11 +1,11 @@
 import BigNumber from "bignumber.js";
-import { HyperfluidSDK } from "..";
+import { HyperionSDK } from "..";
 import { QueryClaimedRewards } from "../config/queries/reward.query";
 
 export class Reward {
-  protected _sdk: HyperfluidSDK;
+  protected _sdk: HyperionSDK;
 
-  constructor(sdk: HyperfluidSDK) {
+  constructor(sdk: HyperionSDK) {
     this._sdk = sdk;
   }
 

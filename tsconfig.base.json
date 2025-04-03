@@ -24,7 +24,7 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
-      "@hyperfluid/sdk": ["./packages/sdk/src"]
+      "@hyperion/sdk": ["./packages/sdk/src"]
     }
   }
 }
