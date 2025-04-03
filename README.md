@@ -1,1 +1,1 @@
-# @hyperion/hyperion-sdk
+# hyperionxyz
