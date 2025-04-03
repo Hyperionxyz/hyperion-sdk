@@ -4,7 +4,11 @@ import APIGetSection from "@/components/APIGetSection";
 import APIPostSection from "@/components/APIPostSection";
 import { useHyperionSDK } from "@/components/HyperionSDKProvider";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { FeeTierIndex, priceToTick, roundTickBySpacing } from "@hyperion/sdk";
+import {
+  FeeTierIndex,
+  priceToTick,
+  roundTickBySpacing,
+} from "@hyperionxyz/sdk";
 import { useEffect, useState } from "react";
 import { Header } from "../components/Header";
 

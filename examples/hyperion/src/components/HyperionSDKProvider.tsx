@@ -1,7 +1,7 @@
 "use client";
 
 import { Network } from "@aptos-labs/ts-sdk";
-import { HyperionSDK, initHyperionSDK } from "@hyperion/sdk";
+import { HyperionSDK, initHyperionSDK } from "@hyperionxyz/sdk";
 import { createContext, useContext } from "react";
 
 export interface HyperionSDKContextState {
