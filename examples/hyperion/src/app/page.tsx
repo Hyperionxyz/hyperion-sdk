@@ -58,6 +58,18 @@ export default function Home() {
             ></APIGetSection>
 
             <APIGetSection
+              description='Fetch Pool Information by TokenPairs and FeeTierIndex'
+              label={"Pool.getPoolByTokenPairAndFeeTier"}
+              api={SDK.Pool.getPoolByTokenPairAndFeeTier.bind(SDK.Pool)}
+              apiParams={{
+                token1: "",
+                token2: "",
+                feeTier: FeeTierIndex["PER_0.01_SPACING_1"],
+              }}
+              docUrl={`${DocURL}/get-pools#id-3.-get-pool-by-token-asset-types-and-feetier`}
+            ></APIGetSection>
+
+            <APIGetSection
               description='Fetch Ticks by Pool ID'
               label={"Pool.fetchTicks"}
               api={SDK.Pool.fetchTicks.bind(SDK.Pool)}

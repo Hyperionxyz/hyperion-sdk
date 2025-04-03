@@ -147,3 +147,20 @@ export const QueryPoolInfoByObjectId = gql`
     }
   }
 `;
+
+export const queryPoolByTokenPair = gql`
+  query queryPoolByTokenPair(
+    $token1: String = ""
+    $token2: String = ""
+    $feeTier: Float = 1.5
+  ) {
+    api {
+      getPoolByTokenPair(feeTier: $feeTier, token1: $token1, token2: $token2) {
+        currentTick
+        token1
+        token2
+        poolId
+      }
+    }
+  }
+`;

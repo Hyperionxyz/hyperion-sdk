@@ -4,10 +4,12 @@ import { HyperionSDK } from "..";
 import {
   QueryAllPools,
   QueryPoolById,
+  queryPoolByTokenPair,
   QueryTickChart,
 } from "../config/queries/pool.query";
 import {
   currencyCheck,
+  FeeTierIndex,
   POOL_STABLE_TYPE,
   poolDeadline,
   slippageCalculator,
@@ -66,6 +68,27 @@ export default class Pool {
       },
     });
     return ret?.api?.getPoolStat || [];
+  }
+
+  async getPoolByTokenPairAndFeeTier({
+    token1,
+    token2,
+    feeTier,
+  }: {
+    token1: string;
+    token2: string;
+    feeTier: FeeTierIndex;
+  }) {
+    const result: any = await this._sdk.requestModule.queryIndexer({
+      document: queryPoolByTokenPair,
+      variables: {
+        token1,
+        token2,
+        feeTier,
+      },
+    });
+
+    return result?.api.getPoolByTokenPair || {};
   }
 
   // TODO: fetch pool by tokenPair Addresses and fee rate
