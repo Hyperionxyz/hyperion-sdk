@@ -256,7 +256,7 @@ export default function Home() {
               label={"Swap.estFromAmount"}
               api={SDK.Swap.estFromAmount.bind(SDK.Position)}
               apiParams={{
-                amountIn: Math.pow(10, 7),
+                amount: Math.pow(10, 7),
                 from: "0xa",
                 to: "0xc5bcdea4d8a9f5809c5c945a3ff5698a347afb982c7389a335100e1b0043d115",
               }}
@@ -267,7 +267,7 @@ export default function Home() {
               label={"Swap.estToAmount"}
               api={SDK.Swap.estToAmount.bind(SDK.Position)}
               apiParams={{
-                amountIn: Math.pow(10, 7),
+                amount: Math.pow(10, 7),
                 from: "0xa",
                 to: "0xc5bcdea4d8a9f5809c5c945a3ff5698a347afb982c7389a335100e1b0043d115",
               }}
@@ -283,10 +283,10 @@ export default function Home() {
                 currencyB:
                   "0xc5bcdea4d8a9f5809c5c945a3ff5698a347afb982c7389a335100e1b0043d115",
                 currencyAAmount: Math.pow(10, 7),
-                currencyBAmount: 98465499,
+                currencyBAmount: 78054932,
                 slippage: 0.1,
                 poolRoute: [
-                  "0xf1083e26e765506c9360d6b07c1478e6bc40376848b4ee44f4f3c729cf2876b5",
+                  "0x0d21c2f5628db619957703e90ab07bcb2b13ad6983da2b5d721f24523cae29ff",
                 ],
                 recipient: accountAddress,
               }}

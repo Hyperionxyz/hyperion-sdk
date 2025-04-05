@@ -2,13 +2,15 @@ import { gql } from "graphql-request";
 
 export const QuerySwapAmount = gql`
   query querySwapAmount(
-    $amountIn: String = ""
     $from: String = ""
     $to: String = ""
+    $amount: String = ""
+    $flag: String = ""
   ) {
     api {
-      getSwapInfo(amountIn: $amountIn, from: $from, to: $to) {
+      getSwapInfo(from: $from, to: $to, amount: $amount, flag: $flag) {
         amountOut
+        amountIn
         path
       }
     }

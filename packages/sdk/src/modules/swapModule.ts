@@ -14,7 +14,7 @@ export interface SwapTransactionPayloadArgs {
 }
 
 export interface EstFromAmountArgs {
-  amountIn: number | string;
+  amount: number | string;
   from: string;
   to: string;
 }
@@ -81,9 +81,10 @@ export class Swap {
     const ret: any = await this._sdk.requestModule.queryIndexer({
       document: QuerySwapAmount,
       variables: {
-        amountIn: args.amountIn.toString(),
-        from: args.to,
-        to: args.from,
+        amount: args.amount.toString(),
+        from: args.from,
+        to: args.to,
+        flag: "out",
       },
     });
 
@@ -94,9 +95,10 @@ export class Swap {
     const ret: any = await this._sdk.requestModule.queryIndexer({
       document: QuerySwapAmount,
       variables: {
-        amountIn: args.amountIn.toString(),
+        amount: args.amount.toString(),
         from: args.from,
         to: args.to,
+        flag: "in",
       },
     });
 
