@@ -1,5 +1,13 @@
 # hyperion
 
+## 0.1.5
+
+### Patch Changes
+
+- fix swap amount estimate
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.8
+
 ## 0.1.4
 
 ### Patch Changes
