@@ -1,5 +1,11 @@
 # @hyperion/sdk
 
+## 0.0.9
+
+### Patch Changes
+
+- update sdk package.json
+
 ## 0.0.8
 
 ### Patch Changes
