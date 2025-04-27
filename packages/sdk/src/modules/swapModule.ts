@@ -47,7 +47,7 @@ export class Swap {
     argumentsAddresses.forEach((addr: string, index: number) => {
       if (addr?.indexOf("::") > -1) {
         const token = new Token({
-          coinType: args.currencyA,
+          coinType: addr,
           // for construct Token instance, useless & meaningless
           name: "token",
           symbol: "token",

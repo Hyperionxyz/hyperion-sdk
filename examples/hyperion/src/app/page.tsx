@@ -279,14 +279,14 @@ export default function Home() {
               description='You can find opposite direction amount estimation and poolRoute from the functions above.'
               api={SDK.Swap.swapTransactionPayload.bind(SDK.Swap)}
               apiParams={{
-                currencyA: "0xa",
                 currencyB:
-                  "0xc5bcdea4d8a9f5809c5c945a3ff5698a347afb982c7389a335100e1b0043d115",
-                currencyAAmount: Math.pow(10, 7),
-                currencyBAmount: 78054932,
+                  "0xce0329021a6c041caf9f532e8b187b70c9ffe743e5f1c91e31078a3d4f220864",
+                currencyA: "0x1::aptos_coin::AptosCoin",
+                currencyBAmount: "9516108",
+                currencyAAmount: "10000000",
                 slippage: 0.1,
                 poolRoute: [
-                  "0x0d21c2f5628db619957703e90ab07bcb2b13ad6983da2b5d721f24523cae29ff",
+                  "0x9a4957cf0549ad011cd21f1f5aa83af556292ebeb9c173cb4b31bbbdc90e83d7",
                 ],
                 recipient: accountAddress,
               }}
