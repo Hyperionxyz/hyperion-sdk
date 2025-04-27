@@ -1,4 +1,4 @@
-import { TokenPairs } from "aptos-tool";
+import { Token, TokenPairs } from "aptos-tool";
 import { HyperionSDK } from "..";
 import { QuerySwapAmount } from "../config/queries/swap.query";
 import { currencyCheck, slippageCalculator, slippageCheck } from "../utils";
@@ -42,9 +42,28 @@ export class Swap {
       slippageCalculator(currencyAmounts[1], args.slippage),
     ];
 
+    // replace coin to fa
+    const argumentsAddresses = [...currencyAddresses];
+    argumentsAddresses.forEach((addr: string, index: number) => {
+      if (addr?.indexOf("::") > -1) {
+        const token = new Token({
+          coinType: args.currencyA,
+          // for construct Token instance, useless & meaningless
+          name: "token",
+          symbol: "token",
+          decimals: 5,
+          assetType: "",
+        });
+        token.faTypeCalculate();
+        if (token.faType) {
+          argumentsAddresses[index] = token.faType;
+        }
+      }
+    });
+
     const params = [
       args.poolRoute,
-      ...currencyAddresses,
+      ...argumentsAddresses,
       ...afterSlippage,
       args.recipient,
     ];
