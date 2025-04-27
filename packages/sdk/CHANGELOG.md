@@ -1,5 +1,11 @@
 # @hyperion/sdk
 
+## 0.0.10
+
+### Patch Changes
+
+- update: swap fucntion supports coinType
+
 ## 0.0.9
 
 ### Patch Changes
