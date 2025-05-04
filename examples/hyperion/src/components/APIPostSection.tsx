@@ -23,11 +23,12 @@ export default function APIPostSection({
   docUrl?: string;
 }) {
   const [data, setData] = useState<any>(null);
+  const [localParams, setLocalParams] = useState(apiParams);
   const [loading, setLoading] = useState<boolean>(false);
   const { signAndSubmitTransaction } = useWallet();
 
   const initialize = async () => {
-    setData(await api?.(apiParams));
+    setData(await api?.(localParams));
   };
 
   const signAndSubmit = async () => {
@@ -59,7 +60,10 @@ export default function APIPostSection({
         </APILabel>
 
         <div className='flex items-center gap-2'>
-          <ParamInSection apiParams={apiParams} />
+          <ParamInSection
+            apiParams={localParams}
+            onParamChange={(params) => setLocalParams(params)}
+          />
 
           <Button variant={"outline"} onClick={initialize}>
             Generate

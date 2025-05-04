@@ -6,9 +6,16 @@ export const QuerySwapAmount = gql`
     $to: String = ""
     $amount: String = ""
     $flag: String = ""
+    $safeMode: Boolean = true
   ) {
     api {
-      getSwapInfo(from: $from, to: $to, amount: $amount, flag: $flag) {
+      getSwapInfo(
+        from: $from
+        to: $to
+        amount: $amount
+        flag: $flag
+        safeMode: $safeMode
+      ) {
         amountOut
         amountIn
         path

@@ -22,14 +22,15 @@ export default function APIGetSection({
   docUrl?: string;
 }) {
   const [data, setData] = useState<any>();
+  const [localParams, setLocalParams] = useState(apiParams);
   const [loading, setLoading] = useState(false);
   const initialize = async () => {
     if (loading) return;
 
-    console.log(apiParams);
+    console.log(localParams);
     try {
       setLoading(true);
-      setData(await api?.(apiParams));
+      setData(await api?.(localParams));
       toast.success("Success");
     } catch (e: any) {
       toast.error(e.message || e, {
@@ -52,7 +53,10 @@ export default function APIGetSection({
           )}
         </APILabel>
         <div className='flex items-center gap-2'>
-          <ParamInSection apiParams={apiParams} />
+          <ParamInSection
+            apiParams={localParams}
+            onParamChange={(params) => setLocalParams(params)}
+          />
 
           <Button variant={"outline"} onClick={initialize}>
             {loading ? <LoaderCircle className='animate-spin' /> : "Go"}

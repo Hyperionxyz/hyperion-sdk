@@ -21,6 +21,7 @@ export default function APIViewSection({
   docUrl?: string;
 }) {
   const [data, setData] = useState<any>();
+  const [localParams, setLocalParams] = useState(apiParams);
   const [viewData, setViewData] = useState<any>();
   const [loading, setLoading] = useState(false);
   const initialize = async () => {
@@ -28,7 +29,7 @@ export default function APIViewSection({
 
     try {
       setLoading(true);
-      setData(await api?.(apiParams));
+      setData(await api?.(localParams));
     } catch (e: any) {
       toast.error(e.message || e, {});
     } finally {
@@ -66,7 +67,10 @@ export default function APIViewSection({
         </APILabel>
 
         <div className='flex items-center gap-2'>
-          <ParamInSection apiParams={apiParams} />
+          <ParamInSection
+            apiParams={localParams}
+            onParamChange={(params) => setLocalParams(params)}
+          />
 
           <Button variant={"outline"} onClick={initialize}>
             Generate

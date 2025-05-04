@@ -17,6 +17,8 @@ export interface EstFromAmountArgs {
   amount: number | string;
   from: string;
   to: string;
+  // Only work on MAINNET
+  safeMode?: boolean;
 }
 
 export class Swap {
@@ -103,6 +105,7 @@ export class Swap {
         amount: args.amount.toString(),
         from: args.from,
         to: args.to,
+        safeMode: args.safeMode,
         flag: "out",
       },
     });
@@ -117,6 +120,7 @@ export class Swap {
         amount: args.amount.toString(),
         from: args.from,
         to: args.to,
+        safeMode: args.safeMode,
         flag: "in",
       },
     });

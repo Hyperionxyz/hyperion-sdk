@@ -94,7 +94,7 @@ export default function Home() {
                   price: 992,
                   feeTierIndex,
                   decimalsRatio: 100,
-                }),
+                })?.toNumber(),
                 tickLower: roundTickBySpacing(22410, feeTierIndex),
                 tickUpper: roundTickBySpacing(25930, feeTierIndex),
                 slippage: 0.1,
@@ -259,6 +259,7 @@ export default function Home() {
                 amount: Math.pow(10, 7),
                 from: "0xa",
                 to: "0xc5bcdea4d8a9f5809c5c945a3ff5698a347afb982c7389a335100e1b0043d115",
+                safeMode: true,
               }}
               docUrl={`${DocURL}swap#swap`}
             ></APIGetSection>
@@ -270,6 +271,7 @@ export default function Home() {
                 amount: Math.pow(10, 7),
                 from: "0xa",
                 to: "0xc5bcdea4d8a9f5809c5c945a3ff5698a347afb982c7389a335100e1b0043d115",
+                safeMode: true,
               }}
               docUrl={`${DocURL}swap#swap`}
             ></APIGetSection>
