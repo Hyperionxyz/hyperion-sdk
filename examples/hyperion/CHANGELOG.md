@@ -1,5 +1,13 @@
 # hyperion
 
+## 0.1.9
+
+### Patch Changes
+
+- 28af84c: add safemode to swap
+- Updated dependencies [28af84c]
+  - @hyperionxyz/sdk@0.0.12
+
 ## 0.1.8
 
 ### Patch Changes

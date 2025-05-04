@@ -1,5 +1,13 @@
 # hyperion-sdk-api-demo
 
+## 0.0.5
+
+### Patch Changes
+
+- 28af84c: add safemode to swap
+- Updated dependencies [28af84c]
+  - @hyperionxyz/sdk@0.0.12
+
 ## 0.0.4
 
 ### Patch Changes
