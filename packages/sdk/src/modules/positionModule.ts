@@ -245,6 +245,20 @@ export class Position {
     };
   }
 
+  claimAllRewardsTransactionPayload({
+    positionId,
+    recipient,
+  }: {
+    positionId: string;
+    recipient: string;
+  }) {
+    return {
+      function: `${this._sdk.sdkOptions.contractAddress}::router_v3::claim_fees_and_rewards`,
+      typeArguments: [],
+      functionArguments: [[positionId], recipient],
+    };
+  }
+
   /**
    *
    * @param positionId

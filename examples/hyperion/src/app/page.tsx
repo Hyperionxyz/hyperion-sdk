@@ -246,7 +246,19 @@ export default function Home() {
                 positionId,
                 recipient: accountAddress,
               }}
-              docUrl={`${DocURL}fee-and-rewards#id-3.-generate-fee-claim-payload`}
+              docUrl={`${DocURL}fee-and-rewards#id-3.-generate-reward-claim-payload`}
+            ></APIPostSection>
+
+            <APIPostSection
+              label={"Position.claimAllRewardsTransactionPayload"}
+              api={SDK.Position.claimAllRewardsTransactionPayload.bind(
+                SDK.Position
+              )}
+              apiParams={{
+                positionId,
+                recipient: accountAddress,
+              }}
+              docUrl={`${DocURL}fee-and-rewards#id-3.-generate-all-reward-claim-payload`}
             ></APIPostSection>
           </div>
 

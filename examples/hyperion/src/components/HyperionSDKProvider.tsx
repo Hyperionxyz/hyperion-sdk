@@ -22,7 +22,9 @@ export const HyperionSDKProvider = ({
   children: React.ReactNode;
 }) => {
   const SDK = initHyperionSDK({
-    network: Network.TESTNET,
+    network: Network.MAINNET,
+    // Mainnet
+    APTOS_API_KEY: "AG-",
   });
 
   return (

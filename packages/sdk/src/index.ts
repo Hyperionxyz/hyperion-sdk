@@ -1,4 +1,4 @@
-import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
+import { Aptos, AptosConfig, ClientConfig, Network } from "@aptos-labs/ts-sdk";
 import Pool from "./modules/poolModule";
 import { Position } from "./modules/positionModule";
 import { RequestModule } from "./modules/requestModule";
@@ -16,10 +16,12 @@ export type SDKOptions = {
   network: Network;
   // Hyperion Contract Address
   contractAddress: string;
-  // Hyperion Fullnode Indexer URL
-  hyperionFullnodeIndexerURL: string;
-  // Official Fullnode Indexer URL
-  officialFullnodeIndexerURL: string;
+  // Hyperion FullNode Indexer URL
+  hyperionFullNodeIndexerURL: string;
+  // Official FullNode Indexer URL
+  officialFullNodeIndexerURL: string;
+  // API Key of Aptos
+  APTOS_API_KEY: string;
 };
 
 export class HyperionSDK {
@@ -41,17 +43,23 @@ export class HyperionSDK {
     this._options = opt;
 
     this._requestModule = new RequestModule({
-      indexerURL: this._options.hyperionFullnodeIndexerURL,
-      officialIndexerURL: this._options.officialFullnodeIndexerURL,
+      indexerURL: this._options.hyperionFullNodeIndexerURL,
+      officialIndexerURL: this._options.officialFullNodeIndexerURL,
     });
 
     this._pool = new Pool(this);
     this._position = new Position(this);
     this._swap = new Swap(this);
     this._reward = new Reward(this);
+
+    // Initialize Aptos Client
+    const clientConfig: ClientConfig = {
+      API_KEY: this._options.APTOS_API_KEY,
+    };
     this._aptosClient = new Aptos(
       new AptosConfig({
         network: this._options.network,
+        clientConfig,
       })
     );
   }
