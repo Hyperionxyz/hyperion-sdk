@@ -1,5 +1,11 @@
 # @hyperion/sdk
 
+## 0.0.13
+
+### Patch Changes
+
+- support aptos api key and claimAllRewardsTransactionPayload
+
 ## 0.0.12
 
 ### Patch Changes

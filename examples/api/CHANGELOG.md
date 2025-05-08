@@ -1,5 +1,13 @@
 # hyperion-sdk-api-demo
 
+## 0.0.6
+
+### Patch Changes
+
+- support aptos api key and claimAllRewardsTransactionPayload
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.13
+
 ## 0.0.5
 
 ### Patch Changes
