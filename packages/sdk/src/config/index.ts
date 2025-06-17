@@ -10,7 +10,7 @@ interface InitHyperionSDKOptions {
 const TESTNET_CONFIG: SDKOptions = {
   network: Network.TESTNET,
   contractAddress:
-    "0x41639ff06db072c728f61e31405ddfda0d78e14eaf45c2e3588a5f5cc1ce2a66",
+    "0xfe095a2ce8ed8ff3c152f2bb3a3afdd3603aa3e60395ffea8cb5ad19801e20c9",
   hyperionFullNodeIndexerURL: "https://api-testnet.hyperion.xyz/v1/graphql",
   officialFullNodeIndexerURL: "https://api.testnet.aptoslabs.com/v1/graphql",
   APTOS_API_KEY: "",
