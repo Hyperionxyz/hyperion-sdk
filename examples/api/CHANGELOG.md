@@ -1,5 +1,13 @@
 # hyperion-sdk-api-demo
 
+## 0.0.8
+
+### Patch Changes
+
+- update: testnet contract address
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.15
+
 ## 0.0.7
 
 ### Patch Changes
