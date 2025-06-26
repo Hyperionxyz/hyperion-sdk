@@ -1,5 +1,13 @@
 # hyperion-sdk-api-demo
 
+## 0.0.9
+
+### Patch Changes
+
+- update feeTier config
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.16
+
 ## 0.0.8
 
 ### Patch Changes

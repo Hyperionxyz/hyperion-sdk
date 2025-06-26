@@ -1,5 +1,11 @@
 # @hyperion/sdk
 
+## 0.0.16
+
+### Patch Changes
+
+- update feeTier config
+
 ## 0.0.15
 
 ### Patch Changes

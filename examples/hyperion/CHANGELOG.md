@@ -1,5 +1,13 @@
 # hyperion
 
+## 0.1.13
+
+### Patch Changes
+
+- update feeTier config
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.16
+
 ## 0.1.12
 
 ### Patch Changes
