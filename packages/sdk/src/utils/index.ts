@@ -23,9 +23,18 @@ export enum FeeTierIndex {
   "PER_0.05_SPACING_5" = 1,
   "PER_0.3_SPACING_60" = 2,
   "PER_1_SPACING_200" = 3,
+  "PER_0.1_SPACING_20" = 4,
+  "PER_0.25_SPACING_50" = 5,
 }
-export const FeeTierItems = ["1", "5", "30", "100"];
-export const FeeTierStep = [1, 10, 60, 200];
+export const FeeTierItems = ["1", "5", "30", "100", "10", "25"];
+export const FeeTierStep = [1, 10, 60, 200, 20, 50];
+export const LowestTickByStep = [
+  -443636, -443630, -443580, -443600, -443620, -443600,
+];
+export const HighestTickByStep = [
+  443636, 443630, 443580, 443600, 443620, 443600,
+];
+
 export const u64Max = 184467440737095516;
 export const roundTickBySpacing = (
   tick: number | string,
@@ -35,7 +44,7 @@ export const roundTickBySpacing = (
   // always towards zero
   return new BigNumber(tick)
     .div(currentStep)
-    .dp(0, BigNumber.ROUND_UP)
+    .dp(0, BigNumber.ROUND_HALF_UP)
     .times(currentStep)
     .toString();
 };
