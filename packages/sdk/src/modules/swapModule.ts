@@ -29,7 +29,7 @@ export class Swap {
   }
 
   /**
-   *
+   * Generate the transaction payload for swap
    * @param args.currencyA The FA address of currency
    * @param args.currencyB The FA address of currency
    */
@@ -96,6 +96,45 @@ export class Swap {
         functionArguments: [...params],
       },
     ]);
+  }
+
+  /**
+   * Generate the transaction payload for swap with partnership
+   * @param args
+   * @returns
+   */
+  swapWithPartnershipTransactionPayload(
+    args: SwapTransactionPayloadArgs & {
+      partnership: string;
+    }
+  ) {
+    currencyCheck(args);
+    slippageCheck(args);
+
+    if (!args.partnership || args.partnership.length === 0) {
+      throw new Error("partnership is required");
+    }
+
+    const currencyAddresses = [args.currencyA, args.currencyB];
+    const currencyAmounts = [args.currencyAAmount, args.currencyBAmount];
+    const afterSlippage = [
+      currencyAmounts[0],
+      slippageCalculator(currencyAmounts[1], args.slippage),
+    ];
+
+    const payload = {
+      function: `${this._sdk.sdkOptions.contractAddress}::partnership::swap_batch_directly_deposit`,
+      typeArguments: [],
+      functionArguments: [
+        args.poolRoute,
+        currencyAddresses[0],
+        currencyAddresses[1],
+        ...afterSlippage,
+        args.partnership,
+      ],
+    };
+
+    return payload;
   }
 
   async estFromAmount(args: EstFromAmountArgs) {
