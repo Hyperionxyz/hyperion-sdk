@@ -1,5 +1,13 @@
 # hyperion
 
+## 0.1.14
+
+### Patch Changes
+
+- add swapWithPartnershipTransactionPayload
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.17
+
 ## 0.1.13
 
 ### Patch Changes

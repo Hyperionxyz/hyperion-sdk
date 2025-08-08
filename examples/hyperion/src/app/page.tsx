@@ -294,7 +294,7 @@ export default function Home() {
               api={SDK.Swap.swapTransactionPayload.bind(SDK.Swap)}
               apiParams={{
                 currencyB:
-                  "0xce0329021a6c041caf9f532e8b187b70c9ffe743e5f1c91e31078a3d4f220864",
+                  "0xbae207659db88bea0cbead6da0ed00aac12edcdda169e591cd41c94180b46f3b",
                 currencyA: "0x1::aptos_coin::AptosCoin",
                 currencyBAmount: "9516108",
                 currencyAAmount: "10000000",
@@ -303,6 +303,28 @@ export default function Home() {
                   "0x9a4957cf0549ad011cd21f1f5aa83af556292ebeb9c173cb4b31bbbdc90e83d7",
                 ],
                 recipient: accountAddress,
+              }}
+              docUrl={`${DocURL}swap#swap`}
+            ></APIPostSection>
+
+            <APIPostSection
+              label={"Swap.swapWithPartnershipTransactionPayload"}
+              description='You can find opposite direction amount estimation and poolRoute from the functions above.'
+              api={SDK.Swap.swapWithPartnershipTransactionPayload.bind(
+                SDK.Swap
+              )}
+              apiParams={{
+                currencyA: "0xa",
+                currencyB:
+                  "0xbae207659db88bea0cbead6da0ed00aac12edcdda169e591cd41c94180b46f3b",
+                currencyAAmount: "10000000",
+                currencyBAmount: "461274",
+                slippage: 0.1,
+                poolRoute: [
+                  "0x6fc5dbd4c66b9f96644bd3412b8e836a584bd10ddee62c380d54fc2f75369f4a",
+                  "0xd3894aca06d5f42b27c89e6f448114b3ed6a1ba07f992a58b2126c71dd83c127",
+                ],
+                partnership: "some_platform",
               }}
               docUrl={`${DocURL}swap#swap`}
             ></APIPostSection>
