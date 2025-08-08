@@ -1,5 +1,11 @@
 # @hyperion/sdk
 
+## 0.0.17
+
+### Patch Changes
+
+- add swapWithPartnershipTransactionPayload
+
 ## 0.0.16
 
 ### Patch Changes
