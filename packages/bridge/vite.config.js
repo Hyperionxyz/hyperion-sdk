@@ -11,13 +11,7 @@ export default defineConfig({
       fileName: "index",
     },
     rollupOptions: {
-      external: [
-        "lodash-es",
-        "aptos-tool",
-        "graphql-request",
-        "bignumber.js",
-        "long",
-      ],
+      external: ["lodash-es", "aptos-tool", "bignumber.js", "long"],
     },
   },
   resolve: { alias: { src: resolve("src/") } },

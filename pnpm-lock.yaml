@@ -262,12 +262,6 @@ importers:
       buffer:
         specifier: ^6.0.3
         version: 6.0.3
-      graphql-request:
-        specifier: ^7.1.2
-        version: 7.1.2(graphql@16.10.0)
-      long:
-        specifier: ^5.3.1
-        version: 5.3.1
     devDependencies:
       '@types/lodash-es':
         specifier: ^4.17.12
