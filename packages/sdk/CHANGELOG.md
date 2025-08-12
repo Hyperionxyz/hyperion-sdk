@@ -1,5 +1,11 @@
 # @hyperion/sdk
 
+## 0.0.18
+
+### Patch Changes
+
+- feat: add bridge package
+
 ## 0.0.17
 
 ### Patch Changes

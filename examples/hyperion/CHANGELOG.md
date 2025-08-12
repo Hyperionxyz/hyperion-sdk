@@ -1,5 +1,14 @@
 # hyperion
 
+## 0.1.15
+
+### Patch Changes
+
+- feat: add bridge package
+- Updated dependencies
+  - @hyperionxyz/bridge@0.0.2
+  - @hyperionxyz/sdk@0.0.18
+
 ## 0.1.14
 
 ### Patch Changes
