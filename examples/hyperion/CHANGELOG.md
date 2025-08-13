@@ -1,5 +1,12 @@
 # hyperion
 
+## 0.1.16
+
+### Patch Changes
+
+- Updated dependencies
+  - @hyperionxyz/bridge@0.0.3
+
 ## 0.1.15
 
 ### Patch Changes
