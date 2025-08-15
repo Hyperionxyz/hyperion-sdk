@@ -1,5 +1,6 @@
 import BigNumber from "bignumber.js";
 import Long from "long";
+BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 
 export const tickComplement = (tick: number | string) => {
   const signed = Long.fromInt(BigNumber(tick).dp(0).toNumber());

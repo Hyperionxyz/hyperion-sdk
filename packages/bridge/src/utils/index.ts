@@ -1,5 +1,6 @@
 import BigNumber from "bignumber.js";
 import { Token } from "aptos-tool";
+BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 
 export function encodeBscRecipient(recipient: string): number[] {
   return Array.from(
@@ -8,7 +9,7 @@ export function encodeBscRecipient(recipient: string): number[] {
 }
 
 export function calculateBridgeAmount(
-  amount: number,
+  amount: number | string,
   decimals: number
 ): string {
   return Token.amountInUnit(amount, decimals).toString();

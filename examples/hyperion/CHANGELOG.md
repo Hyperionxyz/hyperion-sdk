@@ -1,5 +1,14 @@
 # hyperion
 
+## 0.1.17
+
+### Patch Changes
+
+- fix bignumber exponential
+- Updated dependencies
+  - @hyperionxyz/bridge@0.0.4
+  - @hyperionxyz/sdk@0.0.19
+
 ## 0.1.16
 
 ### Patch Changes

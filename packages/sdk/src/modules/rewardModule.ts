@@ -2,6 +2,8 @@ import BigNumber from "bignumber.js";
 import { HyperionSDK } from "..";
 import { QueryClaimedRewards } from "../config/queries/reward.query";
 
+BigNumber.config({ EXPONENTIAL_AT: 1e9 });
+
 export class Reward {
   protected _sdk: HyperionSDK;
 

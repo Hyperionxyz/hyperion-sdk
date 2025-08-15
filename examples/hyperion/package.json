@@ -1,6 +1,6 @@
 {
   "name": "hyperion-web-demo",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "private": true,
   "scripts": {
     "dev": "next dev --experimental-https --turbopack -p 3001",
@@ -31,6 +31,7 @@
     "@wagmi/connectors": "^5.9.3",
     "@wagmi/core": "^2.19.0",
     "aptos-tool": "^0.0.8",
+    "bignumber.js": "^9.1.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.1",

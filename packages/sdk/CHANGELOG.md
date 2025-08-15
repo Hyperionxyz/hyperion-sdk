@@ -1,5 +1,11 @@
 # @hyperion/sdk
 
+## 0.0.19
+
+### Patch Changes
+
+- fix bignumber exponential
+
 ## 0.0.18
 
 ### Patch Changes

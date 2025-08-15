@@ -8,13 +8,15 @@ import {
   calculateSlippage,
   encodeBscRecipient,
 } from "./utils";
+import BigNumber from "bignumber.js";
+BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 
 export { TOKENS } from "./config";
 type BridgeDirection = "aptos-to-bsc" | "bsc-to-aptos";
 
 type BridgeArgs = {
   token: BridgeToken;
-  amount: number;
+  amount: number | string;
   sender: string;
   recipient: string;
 };
@@ -46,7 +48,7 @@ export class HyperionBridge {
       errors.push("Aptos OFT contract address is not set");
     if (!args.sender) errors.push("Sender address is not set");
     if (!args.recipient) errors.push("Recipient address is not set");
-    if (amount <= 0) errors.push("Amount must be greater than 0");
+    if (BigNumber(amount).lte(0)) errors.push("Amount must be greater than 0");
 
     if (errors.length > 0) throw new Error(errors.join(", "));
   }

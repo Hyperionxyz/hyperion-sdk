@@ -3,7 +3,12 @@
 import { useState, useEffect } from "react";
 import { HyperionBridge, TOKENS } from "@hyperionxyz/bridge";
 import { Button } from "@/components/ui/button";
-import { useWriteContract, useWaitForTransactionReceipt, useReadContract } from "wagmi";
+import BigNumber from "bignumber.js";
+import {
+  useWriteContract,
+  useWaitForTransactionReceipt,
+  useReadContract,
+} from "wagmi";
 import { Header } from "@/components/Header";
 import { AutoConnectStatus } from "@/components/AutoConnectStatus";
 
@@ -14,12 +19,14 @@ import { BridgeDirectionSelector } from "@/components/BridgeDirection";
 import { BridgeForm } from "@/components/BridgeForm";
 import { QuoteResult, BridgePayloadResult } from "@/components/BridgeResults";
 import { ApiDocumentation } from "@/components/ApiDocumentation";
+import { BSCWalletConnect } from "@/components/BSCWalletConnect";
 
 type BridgeDirection = "aptos-to-bsc" | "bsc-to-aptos";
+BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 
 export default function BridgePage() {
   const bridge = new HyperionBridge();
-  
+
   const [direction, setDirection] = useState<BridgeDirection>("aptos-to-bsc");
   const [selectedTokenIndex, setSelectedTokenIndex] = useState(0);
   const [amount, setAmount] = useState("0.01");
@@ -85,7 +92,7 @@ export default function BridgePage() {
       return;
     }
 
-    if (!amount || parseFloat(amount) <= 0) {
+    if (!amount || BigNumber(amount).lte(0)) {
       setError("Please enter a valid amount");
       return;
     }
@@ -99,10 +106,11 @@ export default function BridgePage() {
 
     try {
       const token = TOKENS[selectedTokenIndex];
-      const senderAddress = direction === "aptos-to-bsc" ? account?.address : bscAddress;
+      const senderAddress =
+        direction === "aptos-to-bsc" ? account?.address : bscAddress;
       const args = {
         token,
-        amount: parseFloat(amount),
+        amount,
         sender: senderAddress || "",
         recipient: recipient.trim(),
       };
@@ -184,19 +192,26 @@ export default function BridgePage() {
 
     try {
       const token = TOKENS[selectedTokenIndex];
-      const senderAddress = direction === "aptos-to-bsc" ? account!.address : bscAddress!;
+      const senderAddress =
+        direction === "aptos-to-bsc" ? account!.address : bscAddress!;
       const args = {
         token,
-        amount: parseFloat(amount),
+        amount,
         sender: senderAddress,
         recipient: recipient.trim(),
       };
 
       let result;
       if (direction === "aptos-to-bsc") {
-        result = bridge.createBridgePayloadFromAptosToBSC(args, realQuoteResult);
+        result = bridge.createBridgePayloadFromAptosToBSC(
+          args,
+          realQuoteResult
+        );
       } else {
-        result = bridge.createBridgePayloadFromBSCToAptos(args, realQuoteResult);
+        result = bridge.createBridgePayloadFromBSCToAptos(
+          args,
+          realQuoteResult
+        );
       }
 
       setBridgePayload(result);
@@ -285,7 +300,7 @@ export default function BridgePage() {
     }
   };
 
-  const canAutoFillRecipient = 
+  const canAutoFillRecipient =
     (direction === "aptos-to-bsc" && !!bscAddress) ||
     (direction === "bsc-to-aptos" && !!account?.address);
 
@@ -299,7 +314,9 @@ export default function BridgePage() {
 
   useEffect(() => {
     if (isBscTxSuccess) {
-      setSuccessMessage(`BSC transaction confirmed successfully! Hash: ${bscTxHash}`);
+      setSuccessMessage(
+        `BSC transaction confirmed successfully! Hash: ${bscTxHash}`
+      );
     }
   }, [isBscTxSuccess, bscTxHash]);
 
@@ -335,11 +352,11 @@ export default function BridgePage() {
     <>
       <Header />
 
-      <div className="max-w-7xl w-full mx-auto p-4 mt-16">
-        <div className="flex flex-col gap-6">
-          <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold">Hyperion Bridge Demo</h1>
-            <Button onClick={resetDemo} variant="outline">
+      <div className='max-w-7xl w-full mx-auto p-4 mt-16'>
+        <div className='flex flex-col gap-6'>
+          <div className='flex items-center justify-between'>
+            <h1 className='text-3xl font-bold'>Hyperion Bridge Demo</h1>
+            <Button onClick={resetDemo} variant='outline'>
               Reset
             </Button>
           </div>
@@ -348,6 +365,8 @@ export default function BridgePage() {
             selectedTokenIndex={selectedTokenIndex}
             onTokenChange={setSelectedTokenIndex}
           />
+
+          <BSCWalletConnect />
 
           <WalletConnections
             aptosAccount={account}
