@@ -16,6 +16,7 @@ import {
   slippageCheck,
   tickComplement,
 } from "../utils";
+BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 
 export interface CreatePoolTransactionPayloadArgs {
   currencyA: string;

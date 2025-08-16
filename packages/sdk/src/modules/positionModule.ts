@@ -14,6 +14,7 @@ import {
   slippageCheck,
 } from "../utils";
 import { QueryClaimedFee } from "./../config/queries/reward.query";
+BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 
 export interface AddLiquidityTransactionPayloadArgs {
   positionId: string;

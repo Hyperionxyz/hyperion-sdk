@@ -1,6 +1,6 @@
 {
-  "name": "@hyperionxyz/sdk",
-  "version": "0.0.19",
+  "name": "@hyperionxyz/bridge",
+  "version": "0.0.4",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
@@ -14,7 +14,8 @@
     "build": "tsc && vite build"
   },
   "keywords": [
-    "hyperion"
+    "hyperion",
+    "bridge"
   ],
   "author": "tatalock@hyperion.xyz",
   "repository": {
@@ -34,8 +35,7 @@
   "dependencies": {
     "aptos-tool": "^0.0.11",
     "bignumber.js": "^9.1.2",
-    "graphql-request": "^7.1.2",
-    "long": "^5.3.1"
+    "buffer": "^6.0.3"
   },
   "peerDependencies": {
     "@aptos-labs/ts-sdk": "latest"

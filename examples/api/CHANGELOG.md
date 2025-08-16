@@ -1,5 +1,21 @@
 # hyperion-sdk-api-demo
 
+## 0.0.12
+
+### Patch Changes
+
+- fix bignumber exponential
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.19
+
+## 0.0.11
+
+### Patch Changes
+
+- feat: add bridge package
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.18
+
 ## 0.0.10
 
 ### Patch Changes
