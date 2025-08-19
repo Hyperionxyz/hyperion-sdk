@@ -19,7 +19,7 @@ export default function Home() {
   const positionId = "";
   const [accountAddress, setAccountAddress] = useState("");
   const DocURL =
-    "https://hyperfluid.gitbook.io/hyperion-docs/developer/via-sdk/features-available/";
+    "https://docs.hyperion.xyz/developer/via-sdk/features-available";
 
   useEffect(() => {
     setAccountAddress(account?.address || "");

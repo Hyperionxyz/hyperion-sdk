@@ -268,8 +268,6 @@ async function bridgeBSCToAptos() {
 
 - `@aptos-labs/ts-sdk`: Aptos TypeScript SDK
 - `aptos-tool`: Aptos utilities
-- `bignumber.js`: Precision arithmetic
-- `buffer`: Node.js Buffer polyfill
 
 ## License
 
@@ -277,4 +275,4 @@ Apache-2.0
 
 ## Support
 
-For issues and questions, please visit the [GitHub repository](https://github.com/hyperionxyz/hyperfluid-sdk).
+For issues and questions, please visit the [GitHub repository](https://github.com/Hyperionxyz/hyperion-sdk).
