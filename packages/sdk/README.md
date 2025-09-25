@@ -11,4 +11,4 @@ pnpm install @hyperionxyz/sdk
 
 ## Documentation
 
-[Documentation](https://hyperfluid.gitbook.io/hyperion-docs/developer/via-sdk/getting-started)
+[Documentation](https://docs.hyperion.xyz/developer/via-sdk/getting-started)

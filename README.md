@@ -178,7 +178,7 @@ pnpm start:dev
 
 ## Documentation
 
-- [Core SDK Documentation](https://hyperfluid.gitbook.io/hyperion-docs/developer/via-sdk/getting-started)
+- [Core SDK Documentation](https://docs.hyperion.xyz/developer/via-sdk/getting-started)
 - [Bridge SDK Guide](./packages/bridge/README.md)
 - [API Reference](./packages/sdk/README.md)
 
