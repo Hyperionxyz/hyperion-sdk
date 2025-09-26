@@ -1,5 +1,11 @@
 # @hyperion/sdk
 
+## 0.0.21
+
+### Patch Changes
+
+- update testnet contract address
+
 ## 0.0.20
 
 ### Patch Changes

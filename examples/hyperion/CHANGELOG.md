@@ -1,5 +1,12 @@
 # hyperion
 
+## 0.1.19
+
+### Patch Changes
+
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.21
+
 ## 0.1.18
 
 ### Patch Changes
