@@ -3,7 +3,11 @@
 import APIGetSection from "@/components/APIGetSection";
 import APIPostSection from "@/components/APIPostSection";
 import { useHyperionSDK } from "@/components/HyperionSDKProvider";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { Network, useWallet } from "@aptos-labs/wallet-adapter-react";
+import {
+  BuildScriptComposerTransaction,
+  CallArgument,
+} from "@aptos-labs/script-composer-sdk";
 import {
   FeeTierIndex,
   priceToTick,
@@ -11,10 +15,11 @@ import {
 } from "@hyperionxyz/sdk";
 import { useEffect, useState } from "react";
 import { Header } from "../components/Header";
+import { AptosConfig } from "@aptos-labs/ts-sdk";
 
 export default function Home() {
   const { SDK } = useHyperionSDK();
-  const { account } = useWallet();
+  const { account, network } = useWallet();
   const feeTierIndex = FeeTierIndex["PER_0.05_SPACING_5"];
   const positionId = "";
   const [accountAddress, setAccountAddress] = useState("");
@@ -22,12 +27,10 @@ export default function Home() {
     "https://docs.hyperion.xyz/developer/via-sdk/features-available";
 
   useEffect(() => {
-    setAccountAddress(account?.address || "");
+    setAccountAddress(account?.address.toString() || "");
   }, [account]);
 
-  // console.log(tickToPrice({ tick: 25930, decimalsRatio: 100 }));
-  // console.log(tickToPrice({ tick: 25930, decimalsRatio: 100 }));
-  // console.log(tickToPrice({ tick: 22983, decimalsRatio: 100 }));
+  const { signAndSubmitTransaction } = useWallet();
 
   return (
     <>
@@ -328,6 +331,61 @@ export default function Home() {
               }}
               docUrl={`${DocURL}swap#swap`}
             ></APIPostSection>
+
+            <APIGetSection
+              label={"Swap.estAmountByAggregateSwap from B to A"}
+              api={SDK.Swap.estAmountByAggregateSwap.bind(SDK.Swap)}
+              apiParams={{
+                amount: "10000000",
+                from: "0xa",
+                input: "0xa",
+                slippage: 0.1,
+                to: "0xbae207659db88bea0cbead6da0ed00aac12edcdda169e591cd41c94180b46f3b",
+              }}
+              docUrl={`${DocURL}swap#swap`}
+            ></APIGetSection>
+
+            <APIGetSection
+              label={"Swap.estAmountByAggregateSwap from A to B"}
+              api={SDK.Swap.estAmountByAggregateSwap.bind(SDK.Swap)}
+              apiParams={{
+                amount: "10000000",
+                from: "0xa",
+                input:
+                  "0xbae207659db88bea0cbead6da0ed00aac12edcdda169e591cd41c94180b46f3b",
+                slippage: 0.1,
+                to: "0xbae207659db88bea0cbead6da0ed00aac12edcdda169e591cd41c94180b46f3b",
+              }}
+              thenApi={async (data) => {
+                const transaction = await BuildScriptComposerTransaction({
+                  sender: accountAddress,
+                  aptosConfig: new AptosConfig({
+                    network: network!.name as Network,
+                  }) as any,
+                  builder: async (builder) => {
+                    await SDK.Swap.generateAggregateSwapTransactionScript({
+                      ...data,
+                      builder,
+                      // partnershipId: "some_platform",
+                    });
+                    return builder;
+                  },
+                });
+
+                const {
+                  rawTransaction: { payload },
+                } = transaction as any;
+
+                await signAndSubmitTransaction({
+                  data: {
+                    bytecode: payload.script.bytecode,
+                    functionArguments: payload.script.args,
+                    typeArguments: payload.script.type_args,
+                  },
+                });
+              }}
+              docUrl={`${DocURL}swap#swap`}
+            ></APIGetSection>
           </div>
         </div>
       </div>

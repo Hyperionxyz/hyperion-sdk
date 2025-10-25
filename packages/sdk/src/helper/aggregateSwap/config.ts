@@ -1,0 +1,3 @@
+export const AGGREGATE_TOOL_CONTRACT_ADDRESS =
+  "0xc3290d98d622b9ab354277e0b1c5e66552f9784d2d4fb473ff321b9338485117";
+export const AGGREGATOR_PARTNER_NAME = "hyperion-aggregator";

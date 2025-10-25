@@ -1,5 +1,45 @@
 # hyperion
 
+## 0.1.22
+
+### Patch Changes
+
+- add composer sdk
+- Updated dependencies
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.24
+
+## 0.1.22-beta.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.24-beta.0
+
+## 0.1.21
+
+### Patch Changes
+
+- add aggregate script function
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.23
+
+## 0.1.21-alpha.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.23-alpha.1
+
+## 0.1.21-alpha.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.23-alpha.0
+
 ## 0.1.20
 
 ### Patch Changes

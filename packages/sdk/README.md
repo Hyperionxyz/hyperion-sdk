@@ -6,7 +6,7 @@ You can use it to request data, create pools/positions and more.
 ## Installation
 
 ```bash
-pnpm install @hyperionxyz/sdk
+pnpm install @aptos-labs/ts-sdk @aptos-labs/script-composer-sdk @hyperionxyz/sdk
 ```
 
 ## Documentation

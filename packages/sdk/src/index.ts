@@ -7,10 +7,8 @@ import { Swap } from "./modules/swapModule";
 
 export * from "./config";
 export * from "./utils";
-
-// Liquidity
-// Swap
-// Position
+export type { AggregateSwapRouteArgs } from "./helper/aggregateSwap";
+export * from "./helper/aggregateSwap/type.d";
 
 export type SDKOptions = {
   network: Network;
@@ -18,6 +16,8 @@ export type SDKOptions = {
   contractAddress: string;
   // Hyperion FullNode Indexer URL
   hyperionFullNodeIndexerURL: string;
+  // Hyperion API Host
+  hyperionAPIHost: string;
   // Official FullNode Indexer URL
   officialFullNodeIndexerURL: string;
   // API Key of Aptos

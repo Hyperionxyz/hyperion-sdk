@@ -17,7 +17,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 export function Header() {
-  const { account, disconnect, connect, wallets } = useWallet();
+  const { account, disconnect, connect, wallets, network } = useWallet();
   const { setAutoConnect } = useAutoConnect();
 
   // Enable auto-connect when user manually connects
@@ -49,7 +49,7 @@ export function Header() {
         <h1 className='text-2xl font-bold drop-shadow-[1px_-1px_white]'>
           Hyperion SDK Demo
         </h1>
-        <Badge>Testnet</Badge>
+        <Badge>{network?.name}</Badge>
 
         <ul className='ml-4'>
           <li>
@@ -67,7 +67,7 @@ export function Header() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button className='font-semibold'>
-                  {Utils.ShortAddress(account?.address)}
+                  {Utils.ShortAddress(account?.address?.toString() || "")}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className='text-xs'>

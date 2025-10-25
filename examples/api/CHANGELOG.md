@@ -1,5 +1,45 @@
 # hyperion-sdk-api-demo
 
+## 0.0.17
+
+### Patch Changes
+
+- add composer sdk
+- Updated dependencies
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.24
+
+## 0.0.17-beta.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.24-beta.0
+
+## 0.0.16
+
+### Patch Changes
+
+- add aggregate script function
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.23
+
+## 0.0.16-alpha.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.23-alpha.1
+
+## 0.0.16-alpha.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @hyperionxyz/sdk@0.0.23-alpha.0
+
 ## 0.0.15
 
 ### Patch Changes

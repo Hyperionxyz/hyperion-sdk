@@ -17,7 +17,8 @@
     "clean": "turbo run clean && rm -rf node_modules",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "publish-packages": "changeset version && changeset publish"
+    "publish-packages": "changeset version && changeset publish",
+    "release:alpha": "pnpm changeset pre exit || true && pnpm changeset pre enter alpha && pnpm changeset version && pnpm changeset publish && pnpm changeset pre exit"
   },
   "keywords": [],
   "author": "",
@@ -28,5 +29,6 @@
     "rollup-plugin-cleanup": "^3.2.1",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@9.14.2"
+  "packageManager": "pnpm@9.14.2",
+  "dependencies": {}
 }

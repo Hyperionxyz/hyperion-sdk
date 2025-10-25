@@ -1,6 +1,6 @@
 {
   "name": "hyperion-web-demo",
-  "version": "0.1.20",
+  "version": "0.1.22",
   "private": true,
   "scripts": {
     "dev": "next dev --experimental-https --turbopack -p 3001",
@@ -12,9 +12,10 @@
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "dependencies": {
-    "@aptos-labs/ts-sdk": "^1.33.2",
-    "@aptos-labs/wallet-adapter-core": "^4.23.0",
-    "@aptos-labs/wallet-adapter-react": "^3.7.9",
+    "@aptos-labs/script-composer-sdk": "0.3.1",
+    "@aptos-labs/ts-sdk": "^5.1.1",
+    "@aptos-labs/wallet-adapter-core": "^7.6.0",
+    "@aptos-labs/wallet-adapter-react": "^7.1.3",
     "@hyperionxyz/bridge": "workspace:*",
     "@hyperionxyz/sdk": "workspace:*",
     "@keyv/redis": "^4.3.4",
@@ -48,7 +49,7 @@
     "wagmi": "^2.16.3"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "1.0.0-beta.0",
+    "@opennextjs/cloudflare": "1.3.0",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",

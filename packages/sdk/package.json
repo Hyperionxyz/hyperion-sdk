@@ -1,6 +1,6 @@
 {
   "name": "@hyperionxyz/sdk",
-  "version": "0.0.22",
+  "version": "0.0.24",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
@@ -38,7 +38,8 @@
     "long": "^5.3.1"
   },
   "peerDependencies": {
-    "@aptos-labs/ts-sdk": "latest"
+    "@aptos-labs/ts-sdk": "latest",
+    "@aptos-labs/script-composer-sdk": "0.3.1"
   },
   "publishConfig": {
     "access": "public",

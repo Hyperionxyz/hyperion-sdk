@@ -14,12 +14,14 @@ export default function APIGetSection({
   label,
   description,
   docUrl,
+  thenApi,
 }: {
   api: (params?: any) => Promise<any>;
   apiParams?: any;
   label: string;
   description?: string;
   docUrl?: string;
+  thenApi?: (params?: any) => Promise<any>;
 }) {
   const [data, setData] = useState<any>();
   const [localParams, setLocalParams] = useState(apiParams);
@@ -61,6 +63,12 @@ export default function APIGetSection({
           <Button variant={"outline"} onClick={initialize}>
             {loading ? <LoaderCircle className='animate-spin' /> : "Go"}
           </Button>
+
+          {data && thenApi && (
+            <Button variant={"outline"} onClick={() => thenApi(data)}>
+              Then
+            </Button>
+          )}
         </div>
       </div>
 
