@@ -7,7 +7,7 @@ import { TOKENS } from "@hyperionxyz/bridge";
 export const useBridgeWallets = (selectedTokenIndex: number) => {
   const { account, signAndSubmitTransaction } = useWallet();
   const { address: bscAddress, isConnected: isBscConnected } = useBSCAccount();
-  
+
   const [aptosBalance, setAptosBalance] = useState<string>("0");
   const [bscBalance, setBscBalance] = useState<string>("0");
   const [balanceLoading, setBalanceLoading] = useState(false);
@@ -25,7 +25,7 @@ export const useBridgeWallets = (selectedTokenIndex: number) => {
         options: {
           where: {
             owner_address: {
-              _eq: account.address,
+              _eq: account.address.toString(),
             },
             asset_type: {
               _eq: selectedToken.chain.aptos.address,
@@ -91,7 +91,10 @@ export const useBridgeWallets = (selectedTokenIndex: number) => {
     }
   }, [account?.address, selectedTokenIndex]);
 
-  const executeAptosPayload = async (payload: any, type: "view" | "transaction") => {
+  const executeAptosPayload = async (
+    payload: any,
+    type: "view" | "transaction"
+  ) => {
     if (!account?.address) {
       throw new Error("Please connect your Aptos wallet first");
     }
@@ -116,16 +119,16 @@ export const useBridgeWallets = (selectedTokenIndex: number) => {
     account,
     bscAddress,
     isBscConnected,
-    
+
     // Balances
     aptosBalance,
     bscBalance,
     balanceLoading,
-    
+
     // Methods
     executeAptosPayload,
     refreshAptosBalance: getAptosBalance,
-    
+
     // Wallet check helpers
     isAptosConnected: !!account?.address,
     isBscWalletConnected: !!bscAddress,

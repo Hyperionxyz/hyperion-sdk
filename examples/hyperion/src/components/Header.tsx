@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { copy } from "@/lib/utils";
-import { useWallet, WalletName } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { Utils } from "aptos-tool";
 import { Copy, LogOut } from "lucide-react";
 import { Badge } from "./ui/badge";
@@ -35,7 +35,7 @@ export function Header() {
   const handleConnect = async () => {
     try {
       console.log("Header: Attempting to connect wallet...");
-      await connect("Petra" as WalletName);
+      await connect("Petra");
       setAutoConnect(true);
       console.log("Header: Wallet connected successfully, autoConnect enabled");
     } catch (error) {
@@ -71,7 +71,9 @@ export function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className='text-xs'>
-                <DropdownMenuItem onClick={() => copy(account?.address)}>
+                <DropdownMenuItem
+                  onClick={() => copy(account?.address?.toString() || "")}
+                >
                   <Copy size={14} />
                   Copy Address
                 </DropdownMenuItem>
