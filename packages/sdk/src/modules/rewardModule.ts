@@ -4,13 +4,26 @@ import { QueryClaimedRewards } from "../config/queries/reward.query";
 
 BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 
+/**
+ * Reward module for managing position rewards
+ *
+ * Provides functionality for querying and claiming liquidity mining rewards
+ */
 export class Reward {
+  /** SDK instance */
   protected _sdk: HyperionSDK;
 
   constructor(sdk: HyperionSDK) {
     this._sdk = sdk;
   }
 
+  /**
+   * Generate transaction payload for fetching pending rewards
+   *
+   * @param {Object} params - Parameters
+   * @param {string} params.positionId - Position ID
+   * @returns {Object} Returns transaction payload for fetching rewards
+   */
   fetchRewardsPayload({ positionId }: { positionId: string }) {
     return {
       function: `${this._sdk.sdkOptions.contractAddress}::pool_v3::get_pending_rewards`,
@@ -22,8 +35,10 @@ export class Reward {
   /**
    * Fetch the history of Fee Farm claim
    *
-   * @param args
-   * @returns
+   * @param {Object} args - Parameters
+   * @param {string} args.positionId - Position ID
+   * @param {string} args.address - Owner address
+   * @returns {Promise<Array>} Returns filtered reward claim history (excludes zero-amount records)
    */
   async fetchRewardHistory(args: { positionId: string; address: string }) {
     const ret: any = await this._sdk.requestModule.queryIndexer({
@@ -39,6 +54,14 @@ export class Reward {
     });
   }
 
+  /**
+   * Generate transaction payload for claiming rewards
+   *
+   * @param {Object} params - Parameters
+   * @param {string} params.positionId - Position ID
+   * @param {string} params.recipient - Recipient address
+   * @returns {Object} Returns transaction payload for claiming rewards
+   */
   claimRewardPayload({
     positionId,
     recipient,

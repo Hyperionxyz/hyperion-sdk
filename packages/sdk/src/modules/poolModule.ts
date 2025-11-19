@@ -18,41 +18,82 @@ import {
 } from "../utils";
 BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 
+/**
+ * Arguments for creating a liquidity pool transaction
+ */
 export interface CreatePoolTransactionPayloadArgs {
+  /** Currency A address */
   currencyA: string;
+  /** Currency B address */
   currencyB: string;
+  /** Amount of currency A */
   currencyAAmount: number | string;
+  /** Amount of currency B */
   currencyBAmount: number | string;
+  /** Fee tier index */
   feeTierIndex: number | string;
+  /** Current price tick */
   currentPriceTick: number | string;
+  /** Lower tick of price range */
   tickLower: number | string;
+  /** Upper tick of price range */
   tickUpper: number | string;
+  /** Slippage tolerance */
   slippage: number | string;
 }
 
+/**
+ * Base arguments for amount estimation
+ */
 export interface EstAmountArgs {
+  /** Currency A address */
   currencyA: string;
+  /** Currency B address */
   currencyB: string;
+  /** Fee tier index */
   feeTierIndex: number | string;
+  /** Lower tick of price range */
   tickLower: number | string;
+  /** Upper tick of price range */
   tickUpper: number | string;
+  /** Current price tick */
   currentPriceTick: number | string;
 }
 
+/**
+ * Arguments for estimating currency A amount from currency B
+ */
 export type EstCurrencyAAmountArgs = EstAmountArgs & {
+  /** Amount of currency B */
   currencyBAmount: number | string;
 };
 
+/**
+ * Arguments for estimating currency B amount from currency A
+ */
 export type EstCurrencyBAmountArgs = EstAmountArgs & {
+  /** Amount of currency A */
   currencyAAmount: number | string;
 };
 
+/**
+ * Pool module for managing liquidity pools
+ *
+ * Provides functionality for creating pools, querying pool information, and estimating liquidity amounts
+ */
 export default class Pool {
+  /** SDK instance */
   protected _sdk: HyperionSDK;
+
   constructor(sdk: HyperionSDK) {
     this._sdk = sdk;
   }
 
+  /**
+   * Fetch all liquidity pools
+   *
+   * @returns Returns statistics of all liquidity pools
+   */
   async fetchAllPools() {
     // TODO: fetch all pools by page
     const ret: any = await this._sdk.requestModule.queryIndexer({
@@ -61,6 +102,12 @@ export default class Pool {
     return ret?.api?.getPoolStat || [];
   }
 
+  /**
+   * Fetch liquidity pool information by pool ID
+   *
+   * @param poolId - Pool ID
+   * @returns Returns statistics of the specified pool
+   */
   async fetchPoolById({ poolId }: { poolId: string }) {
     const ret: any = await this._sdk.requestModule.queryIndexer({
       document: QueryPoolById,
@@ -71,6 +118,14 @@ export default class Pool {
     return ret?.api?.getPoolStat || [];
   }
 
+  /**
+   * Get liquidity pool by token pair and fee tier
+   *
+   * @param token1 - Token 1 address
+   * @param token2 - Token 2 address
+   * @param feeTier - Fee tier
+   * @returns Returns matching pool information
+   */
   async getPoolByTokenPairAndFeeTier({
     token1,
     token2,
@@ -95,9 +150,14 @@ export default class Pool {
   // TODO: fetch pool by tokenPair Addresses and fee rate
 
   /**
-   * Creates a liquidity pool
+   * Creates a liquidity pool transaction payload
    *
-   * This method is used to initialize a liquidity pool.
+   * This method is used to initialize a new liquidity pool and automatically selects
+   * the appropriate contract function based on token types
+   *
+   * @param args - Pool creation arguments
+   * @returns Returns transaction payload object
+   * @throws Throws error if parameter validation fails
    */
   async createPoolTransactionPayload(args: CreatePoolTransactionPayloadArgs) {
     currencyCheck(args);
@@ -164,6 +224,12 @@ export default class Pool {
     ]);
   }
 
+  /**
+   * Fetch tick chart data for a liquidity pool
+   *
+   * @param poolId - Pool ID
+   * @returns Returns liquidity accumulation data
+   */
   async fetchTicks({ poolId }: { poolId: string }) {
     const ret: any = await this._sdk.requestModule.queryIndexer({
       document: QueryTickChart,
@@ -174,6 +240,12 @@ export default class Pool {
     return ret?.api?.getLiquidityAccumulation || [];
   }
 
+  /**
+   * Estimate optimal currency A amount from currency B amount
+   *
+   * @param args - Estimation arguments
+   * @returns Returns [currency A amount, currency B amount]
+   */
   // TODO: return data type in docs
   // [number_a, number_b]
   async estCurrencyAAmountFromB(args: EstCurrencyAAmountArgs) {
@@ -193,11 +265,15 @@ export default class Pool {
       ],
     };
 
-    console.log(payload);
-
     return await this._sdk.AptosClient.view({ payload });
   }
 
+  /**
+   * Estimate optimal currency B amount from currency A amount
+   *
+   * @param args - Estimation arguments
+   * @returns Returns [currency A amount, currency B amount]
+   */
   async estCurrencyBAmountFromA(args: EstCurrencyBAmountArgs) {
     const payload: any = {
       function: `${this._sdk.sdkOptions.contractAddress}::router_v3::optimal_liquidity_amounts_from_a`,

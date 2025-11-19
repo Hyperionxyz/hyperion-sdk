@@ -32,14 +32,15 @@
     "vite-plugin-dts": "^4.5.3"
   },
   "dependencies": {
+    "@caas-xyz/core": "^1.0.7",
     "aptos-tool": "^0.0.11",
     "bignumber.js": "^9.1.2",
     "graphql-request": "^7.1.2",
     "long": "^5.3.1"
   },
   "peerDependencies": {
-    "@aptos-labs/ts-sdk": "latest",
-    "@aptos-labs/script-composer-sdk": "0.3.1"
+    "@aptos-labs/script-composer-sdk": "0.3.1",
+    "@aptos-labs/ts-sdk": "latest"
   },
   "publishConfig": {
     "access": "public",

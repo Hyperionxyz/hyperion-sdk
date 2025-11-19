@@ -3,7 +3,7 @@
   "version": "0.1.22",
   "private": true,
   "scripts": {
-    "dev": "next dev --experimental-https --turbopack -p 3001",
+    "dev": "next dev --experimental-https --turbopack -H dev-sdk.hyperion.xyz -p 3001",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

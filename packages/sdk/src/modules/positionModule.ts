@@ -16,35 +16,69 @@ import {
 import { QueryClaimedFee } from "./../config/queries/reward.query";
 BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 
+/**
+ * Arguments for adding liquidity transaction payload
+ */
 export interface AddLiquidityTransactionPayloadArgs {
+  /** Position ID */
   positionId: string;
+  /** Currency A address */
   currencyA: string;
+  /** Currency B address */
   currencyB: string;
+  /** Amount of currency A */
   currencyAAmount: number | string;
+  /** Amount of currency B */
   currencyBAmount: number | string;
+  /** Slippage tolerance */
   slippage: number | string;
+  /** Fee tier index */
   feeTierIndex: number | string;
 }
 
+/**
+ * Arguments for removing liquidity transaction payload
+ */
 export interface RemoveLiquidityTransactionPayloadArgs {
+  /** Position ID */
   positionId: string;
+  /** Currency A address */
   currencyA: string;
+  /** Currency B address */
   currencyB: string;
+  /** Amount of currency A */
   currencyAAmount: number | string;
+  /** Amount of currency B */
   currencyBAmount: number | string;
+  /** Delta liquidity to remove */
   deltaLiquidity: number | string;
+  /** Slippage tolerance */
   slippage: number | string;
-  // Remove to
+  /** Recipient address */
   recipient: string;
 }
 
+/**
+ * Position module for managing liquidity positions
+ *
+ * Provides functionality for creating, managing, and querying liquidity positions,
+ * including adding/removing liquidity and claiming fees/rewards
+ */
 export class Position {
+  /** SDK instance */
   protected _sdk: HyperionSDK;
 
   constructor(sdk: HyperionSDK) {
     this._sdk = sdk;
   }
 
+  /**
+   * Fetch all positions by owner address
+   *
+   * @param {Object} params - Parameters
+   * @param {string} params.address - Owner address
+   * @returns {Promise<Array>} Returns array of position statistics
+   */
   async fetchAllPositionsByAddress({ address }: { address: string }) {
     const ret: any = await this._sdk.requestModule.queryIndexer({
       document: QueryAllPositionByAddress,
@@ -55,6 +89,14 @@ export class Position {
     return ret?.api?.getPositionStatsByAddress || [];
   }
 
+  /**
+   * Fetch position information by position ID
+   *
+   * @param {Object} args - Parameters
+   * @param {string} args.positionId - Position ID
+   * @param {string} args.address - Owner address
+   * @returns {Promise<Array>} Returns position ownership data
+   */
   async fetchPositionById(args: { positionId: string; address: string }) {
     const ret: any = await this._sdk.requestModule.queryIndexer({
       document: QueryPoolInfoByObjectId,
@@ -67,10 +109,12 @@ export class Position {
   }
 
   /**
-   * Fetch the history of Fee Reward claim
+   * Fetch the history of fee reward claims
    *
-   * @param args
-   * @returns
+   * @param {Object} args - Parameters
+   * @param {string} args.positionId - Position ID
+   * @param {string} args.address - Owner address
+   * @returns {Promise<Array>} Returns filtered fee claim history (excludes zero-amount records)
    */
   async fetchFeeHistory(args: { positionId: string; address: string }) {
     const ret: any = await this._sdk.requestModule.queryIndexer({
@@ -86,18 +130,14 @@ export class Position {
     });
   }
 
-  // async fetchFeePayload({ positionId }: { positionId: string }) {
-  //   return {
-  //     function: `${this._sdk.sdkOptions.contractAddress}::pool_v3::get_pending_fees`,
-  //     typeArguments: [],
-  //     functionArguments: [positionId],
-  //   };
-  // }
-
   /**
-   * Adds liquidity to a liquidity pool
+   * Generate transaction payload for adding liquidity to a position
    *
-   * This method is used to add liquidity to a liquidity pool.
+   * This method automatically selects the appropriate contract function based on token types
+   *
+   * @param {AddLiquidityTransactionPayloadArgs} args - Add liquidity arguments
+   * @returns {Promise<Object>} Returns transaction payload object
+   * @throws Throws error if parameter validation fails
    */
   async addLiquidityTransactionPayload(
     args: AddLiquidityTransactionPayloadArgs
@@ -157,9 +197,13 @@ export class Position {
   }
 
   /**
-   * Removes liquidity from a liquidity pool
+   * Generate transaction payload for removing liquidity from a position
    *
-   * This method is used to remove liquidity from a liquidity pool.
+   * This method automatically selects the appropriate contract function based on token types
+   *
+   * @param {RemoveLiquidityTransactionPayloadArgs} args - Remove liquidity arguments
+   * @returns {Object} Returns transaction payload object
+   * @throws Throws error if parameter validation fails or invalid recipient address
    */
   removeLiquidityTransactionPayload(
     args: RemoveLiquidityTransactionPayloadArgs
@@ -218,6 +262,14 @@ export class Position {
     ]);
   }
 
+  /**
+   * Generate transaction payload for claiming fees from a position
+   *
+   * @param {Object} params - Parameters
+   * @param {string} params.positionId - Position ID
+   * @param {string} params.recipient - Recipient address
+   * @returns {Object} Returns transaction payload for claiming fees
+   */
   claimFeeTransactionPayload({
     positionId,
     recipient,
@@ -232,6 +284,14 @@ export class Position {
     };
   }
 
+  /**
+   * Generate transaction payload for claiming rewards from a position
+   *
+   * @param {Object} params - Parameters
+   * @param {string} params.positionId - Position ID
+   * @param {string} params.recipient - Recipient address
+   * @returns {Object} Returns transaction payload for claiming rewards
+   */
   claimRewardTransactionPayload({
     positionId,
     recipient,
@@ -246,6 +306,14 @@ export class Position {
     };
   }
 
+  /**
+   * Generate transaction payload for claiming both fees and rewards from a position
+   *
+   * @param {Object} params - Parameters
+   * @param {string} params.positionId - Position ID
+   * @param {string} params.recipient - Recipient address
+   * @returns {Object} Returns transaction payload for claiming all rewards
+   */
   claimAllRewardsTransactionPayload({
     positionId,
     recipient,
@@ -261,10 +329,11 @@ export class Position {
   }
 
   /**
+   * Fetch token amounts by position ID
    *
-   * @param positionId
-   *
-   * @returns [currencyAAmount, currencyBAmount]
+   * @param {Object} params - Parameters
+   * @param {string} params.positionId - Position ID
+   * @returns {Promise<[string, string]>} Returns [currencyAAmount, currencyBAmount]
    */
   async fetchTokensAmountByPositionId({ positionId }: { positionId: string }) {
     const payload: any = {

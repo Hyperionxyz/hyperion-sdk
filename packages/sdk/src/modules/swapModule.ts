@@ -10,26 +10,50 @@ import { AggregateSwapInfoResult } from "../helper/aggregateSwap/type";
 import { AptosScriptComposer } from "@aptos-labs/script-composer-sdk";
 import { Network } from "@aptos-labs/ts-sdk";
 
+/**
+ * Arguments for swap transaction payload
+ */
 export interface SwapTransactionPayloadArgs {
+  /** Currency A address */
   currencyA: string;
+  /** Currency B address */
   currencyB: string;
+  /** Amount of currency A */
   currencyAAmount: number | string;
+  /** Amount of currency B */
   currencyBAmount: number | string;
+  /** Slippage tolerance */
   slippage: number | string;
+  /** Pool route array */
   poolRoute: string[];
+  /** Recipient address */
   recipient: string;
 }
 
+/**
+ * Arguments for estimating amount from a given amount
+ */
 export interface EstFromAmountArgs {
+  /** Input amount */
   amount: number | string;
+  /** Source token address */
   from: string;
+  /** Target token address */
   to: string;
-  // Only work on MAINNET
+  /** Safe mode flag - only works on MAINNET */
   safeMode?: boolean;
 }
 
+/**
+ * Swap module for token swapping functionality
+ *
+ * Provides methods for creating swap transactions, estimating swap amounts,
+ * and handling aggregate swaps across multiple pools
+ */
 export class Swap {
+  /** SDK instance */
   protected _sdk: HyperionSDK;
+  /** Aggregate swap helper instance */
   protected _aggregateSwapHelper: AggregateSwapHelper;
 
   constructor(sdk: HyperionSDK) {
@@ -39,15 +63,16 @@ export class Swap {
 
   /**
    * Generate the transaction payload for swap
-   * @param args SwapTransactionPayloadArgs
-   * @param args.currencyA The FA address of currency
-   * @param args.currencyB The FA address of currency
-   * @param args.currencyAAmount The amount of the input token
-   * @param args.currencyBAmount The amount of the output token
-   * @param args.slippage The slippage tolerance
-   * @param args.poolRoute The pool route
-   * @param args.recipient The recipient address
-   * @returns The transaction payload for swap
+   *
+   * @param {SwapTransactionPayloadArgs} args - Swap arguments
+   * @param {string} args.currencyA - The FA address of currency A
+   * @param {string} args.currencyB - The FA address of currency B
+   * @param {number|string} args.currencyAAmount - The amount of the input token
+   * @param {number|string} args.currencyBAmount - The amount of the output token
+   * @param {number|string} args.slippage - The slippage tolerance
+   * @param {string[]} args.poolRoute - The pool route
+   * @param {string} args.recipient - The recipient address
+   * @returns {Object} The transaction payload for swap
    */
   swapTransactionPayload(args: SwapTransactionPayloadArgs) {
     currencyCheck(args);
@@ -116,16 +141,17 @@ export class Swap {
 
   /**
    * Generate the transaction payload for swap with partnership
-   * @param args SwapTransactionPayloadArgs & { partnership: string }
-   * @param args.currencyA The FA address of currency
-   * @param args.currencyB The FA address of currency
-   * @param args.currencyAAmount The amount of the input token
-   * @param args.currencyBAmount The amount of the output token
-   * @param args.slippage The slippage tolerance
-   * @param args.poolRoute The pool route
-   * @param args.recipient The recipient address
-   * @param args.partnership The partnership address
-   * @returns
+   *
+   * @param {SwapTransactionPayloadArgs & { partnership: string }} args - Swap arguments with partnership
+   * @param {string} args.currencyA - The FA address of currency A
+   * @param {string} args.currencyB - The FA address of currency B
+   * @param {number|string} args.currencyAAmount - The amount of the input token
+   * @param {number|string} args.currencyBAmount - The amount of the output token
+   * @param {number|string} args.slippage - The slippage tolerance
+   * @param {string[]} args.poolRoute - The pool route
+   * @param {string} args.recipient - The recipient address
+   * @param {string} args.partnership - The partnership address
+   * @returns {Object} The transaction payload for swap with partnership
    */
   swapWithPartnershipTransactionPayload(
     args: SwapTransactionPayloadArgs & {
@@ -163,12 +189,13 @@ export class Swap {
 
   /**
    * Estimate the amount of currency A from currency B
-   * @param args EstFromAmountArgs
-   * @param args.amount The amount of the input token
-   * @param args.from The address of the input token
-   * @param args.to The address of the output token
-   * @param args.safeMode Whether to use safe mode, only work on MAINNET
-   * @returns
+   *
+   * @param {EstFromAmountArgs} args - Estimation arguments
+   * @param {number|string} args.amount - The amount of the input token
+   * @param {string} args.from - The address of the input token
+   * @param {string} args.to - The address of the output token
+   * @param {boolean} [args.safeMode] - Whether to use safe mode, only works on MAINNET
+   * @returns {Promise<any>} Estimated swap information
    */
   async estFromAmount(args: EstFromAmountArgs) {
     const ret: any = await this._sdk.requestModule.queryIndexer({
@@ -187,12 +214,13 @@ export class Swap {
 
   /**
    * Estimate the amount of currency B from currency A
-   * @param args EstFromAmountArgs
-   * @param args.amount The amount of the input token
-   * @param args.from The address of the input token
-   * @param args.to The address of the output token
-   * @param args.safeMode Whether to use safe mode, only work on MAINNET
-   * @returns
+   *
+   * @param {EstFromAmountArgs} args - Estimation arguments
+   * @param {number|string} args.amount - The amount of the input token
+   * @param {string} args.from - The address of the input token
+   * @param {string} args.to - The address of the output token
+   * @param {boolean} [args.safeMode] - Whether to use safe mode, only works on MAINNET
+   * @returns {Promise<any>} Estimated swap information
    */
   async estToAmount(args: EstFromAmountArgs) {
     const ret: any = await this._sdk.requestModule.queryIndexer({
@@ -211,16 +239,16 @@ export class Swap {
 
   /**
    * Estimate the amount of currency A from currency B by aggregate swap
-   * @param args AggregateSwapRouteArgs
-   * @param args.amount The amount of the input token
-   * @param args.from The address of the input token
-   * @param args.input The address of the input token, either equals to args.from or args.to
-   * @param args.slippage The slippage tolerance
-   * @param args.to The address of the output token
-   * @returns The result of aggregate swap
+   *
+   * @param {AggregateSwapRouteArgs} args - Aggregate swap route arguments
+   * @param {number|string} args.amount - The amount of the input token
+   * @param {string} args.from - The address of the input token
+   * @param {string} args.input - The address of the input token, either equals to args.from or args.to
+   * @param {number|string} args.slippage - The slippage tolerance
+   * @param {string} args.to - The address of the output token
+   * @returns {Promise<AggregateSwapInfoResult>} The result of aggregate swap
    *
    * @example
-   * ```ts
    * // Estimate the result of currency A from currency B by aggregate swap
    * const result = await SDK.Swap.estAmountByAggregateSwap({
    *   amount: "10000000",
@@ -230,10 +258,8 @@ export class Swap {
    *   to: "B_AssetType",
    * });
    * console.log(result);
-   * ```
    *
-   * or
-   * ```ts
+   * @example
    * // Estimate the result of currency B from currency A by aggregate swap
    * const result = await SDK.Swap.estAmountByAggregateSwap({
    *   amount: "10000000",
@@ -243,7 +269,6 @@ export class Swap {
    *   to: "A_AssetType",
    * });
    * console.log(result);
-   * ```
    */
   async estAmountByAggregateSwap(
     args: AggregateSwapRouteArgs
@@ -257,15 +282,16 @@ export class Swap {
 
   /**
    * Generate the transaction script for aggregate swap
-   * @param args AggregateSwapRouteArgs
-   * @param args.amount The amount of the input token
-   * @param args.from The address of the input token
-   * @param args.input The address of the input token, either equals to args.from or args.to
-   * @param args.slippage The slippage tolerance
-   * @param args.to The address of the output token
-   * @param args.builder The builder of the transaction
-   * @param args.partnershipId The partnership ID, only work on MAINNET
-   * @returns The transaction script for aggregate swap
+   *
+   * @param {AggregateSwapInfoResult & { builder: AptosScriptComposer; partnershipId?: string }} args - Arguments
+   * @param {number|string} args.amount - The amount of the input token
+   * @param {string} args.from - The address of the input token
+   * @param {string} args.input - The address of the input token, either equals to args.from or args.to
+   * @param {number|string} args.slippage - The slippage tolerance
+   * @param {string} args.to - The address of the output token
+   * @param {AptosScriptComposer} args.builder - The builder of the transaction
+   * @param {string} [args.partnershipId] - The partnership ID, only works on MAINNET
+   * @returns {Promise<any>} The transaction script for aggregate swap
    */
   async generateAggregateSwapTransactionScript(
     args: AggregateSwapInfoResult & {
