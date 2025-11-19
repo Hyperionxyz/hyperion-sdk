@@ -108,7 +108,7 @@ export default function BridgePage() {
       const token = TOKENS[selectedTokenIndex];
       const senderAddress =
         direction === "aptos-to-bsc" ? account?.address : bscAddress;
-      const args = {
+      const args: any = {
         token,
         amount,
         sender: senderAddress || "",
@@ -143,7 +143,7 @@ export default function BridgePage() {
         if (result) {
           setRealQuoteResult(result);
           setSuccessMessage(
-            `Aptos quote executed successfully! Result: [${result.join(", ")}] - Now you can create bridge payload with real quote data.`
+            `Aptos quote executed successfully! Result: [${result}] - Now you can create bridge payload with real quote data.`
           );
         }
       } else {
@@ -194,7 +194,7 @@ export default function BridgePage() {
       const token = TOKENS[selectedTokenIndex];
       const senderAddress =
         direction === "aptos-to-bsc" ? account!.address : bscAddress!;
-      const args = {
+      const args: any = {
         token,
         amount,
         sender: senderAddress,
@@ -277,7 +277,7 @@ export default function BridgePage() {
       if (direction === "aptos-to-bsc" && bscAddress) {
         setRecipient(bscAddress);
       } else if (direction === "bsc-to-aptos" && account?.address) {
-        setRecipient(account.address);
+        setRecipient(account.address.toString() || "");
       }
     }, 0);
   };
@@ -296,7 +296,7 @@ export default function BridgePage() {
     if (direction === "aptos-to-bsc" && bscAddress) {
       setRecipient(bscAddress);
     } else if (direction === "bsc-to-aptos" && account?.address) {
-      setRecipient(account.address);
+      setRecipient(account.address.toString() || "");
     }
   };
 
@@ -332,7 +332,7 @@ export default function BridgePage() {
     if (direction === "aptos-to-bsc" && bscAddress) {
       setRecipient(bscAddress);
     } else if (direction === "bsc-to-aptos" && account?.address) {
-      setRecipient(account.address);
+      setRecipient(account.address.toString() || "");
     }
   }, [direction]);
 
@@ -344,7 +344,7 @@ export default function BridgePage() {
 
   useEffect(() => {
     if (direction === "bsc-to-aptos" && account?.address && !recipient) {
-      setRecipient(account.address);
+      setRecipient(account.address.toString() || "");
     }
   }, [account?.address]);
 
