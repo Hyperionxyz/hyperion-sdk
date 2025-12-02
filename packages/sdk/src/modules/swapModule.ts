@@ -1,6 +1,5 @@
 import { Token, TokenPairs } from "aptos-tool";
 import { HyperionSDK } from "..";
-import { QuerySwapAmount } from "../config/queries/swap.query";
 import { currencyCheck, slippageCalculator, slippageCheck } from "../utils";
 import {
   AggregateSwapHelper,

@@ -1,5 +1,11 @@
 # @hyperion/sdk
 
+## 0.0.25
+
+### Patch Changes
+
+- update swap est amount function
+
 ## 0.0.24
 
 ### Patch Changes
