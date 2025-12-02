@@ -171,18 +171,25 @@ export class Swap {
    * @returns
    */
   async estFromAmount(args: EstFromAmountArgs) {
-    const ret: any = await this._sdk.requestModule.queryIndexer({
-      document: QuerySwapAmount,
-      variables: {
-        amount: args.amount.toString(),
-        from: args.from,
-        to: args.to,
-        safeMode: args.safeMode,
-        flag: "out",
-      },
+    const queryParams = new URLSearchParams({
+      amount: args.amount.toString(),
+      from: args.from,
+      to: args.to,
+      safeMode: args.safeMode ? "true" : "false",
+      flag: "out",
     });
 
-    return ret?.api.getSwapInfo;
+    const ret = await fetch(
+      `${this._sdk.sdkOptions.hyperionAPIHost}/base/rate/getSwapInfo?${queryParams.toString()}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return await ret.json();
   }
 
   /**
@@ -195,18 +202,25 @@ export class Swap {
    * @returns
    */
   async estToAmount(args: EstFromAmountArgs) {
-    const ret: any = await this._sdk.requestModule.queryIndexer({
-      document: QuerySwapAmount,
-      variables: {
-        amount: args.amount.toString(),
-        from: args.from,
-        to: args.to,
-        safeMode: args.safeMode,
-        flag: "in",
-      },
+    const queryParams = new URLSearchParams({
+      amount: args.amount.toString(),
+      from: args.from,
+      to: args.to,
+      safeMode: args.safeMode ? "true" : "false",
+      flag: "in",
     });
 
-    return ret?.api.getSwapInfo;
+    const ret = await fetch(
+      `${this._sdk.sdkOptions.hyperionAPIHost}/base/rate/getSwapInfo?${queryParams.toString()}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return await ret.json();
   }
 
   /**
