@@ -25,7 +25,7 @@ pnpm install @hyperionxyz/sdk
 - Pool and position management
 - Swap operations
 - Reward claiming
-- GraphQL query support
+- REST API data reads
 - TypeScript support
 
 ### [@hyperionxyz/bridge](./packages/bridge) - Cross-Chain Bridge
