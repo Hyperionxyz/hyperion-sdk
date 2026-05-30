@@ -17,7 +17,6 @@ export default defineConfig({
       external: [
         "lodash-es",
         "aptos-tool",
-        "graphql-request",
         "@aptos-labs/script-composer-sdk",
         "@aptos-labs/ts-sdk",
         "bignumber.js",

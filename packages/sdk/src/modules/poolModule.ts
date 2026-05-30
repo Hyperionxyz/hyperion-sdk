@@ -2,12 +2,6 @@ import { TokenPairs } from "aptos-tool";
 import BigNumber from "bignumber.js";
 import { HyperionSDK } from "..";
 import {
-  QueryAllPools,
-  QueryPoolById,
-  queryPoolByTokenPair,
-  QueryTickChart,
-} from "../config/queries/pool.query";
-import {
   currencyCheck,
   FeeTierIndex,
   POOL_STABLE_TYPE,
@@ -54,21 +48,18 @@ export default class Pool {
   }
 
   async fetchAllPools() {
-    // TODO: fetch all pools by page
-    const ret: any = await this._sdk.requestModule.queryIndexer({
-      document: QueryAllPools,
-    });
-    return ret?.api?.getPoolStat || [];
+    const ret: any = await this._sdk.requestModule.get(
+      "/base/data/pools/stats"
+    );
+    return ret?.items || [];
   }
 
   async fetchPoolById({ poolId }: { poolId: string }) {
-    const ret: any = await this._sdk.requestModule.queryIndexer({
-      document: QueryPoolById,
-      variables: {
-        poolId,
-      },
-    });
-    return ret?.api?.getPoolStat || [];
+    const ret: any = await this._sdk.requestModule.get(
+      "/base/data/pools/stats",
+      { poolId }
+    );
+    return ret?.items || [];
   }
 
   async getPoolByTokenPairAndFeeTier({
@@ -80,16 +71,16 @@ export default class Pool {
     token2: string;
     feeTier: FeeTierIndex;
   }) {
-    const result: any = await this._sdk.requestModule.queryIndexer({
-      document: queryPoolByTokenPair,
-      variables: {
+    const result: any = await this._sdk.requestModule.get(
+      "/base/data/pools/by-token-pair",
+      {
         token1,
         token2,
         feeTier,
-      },
-    });
+      }
+    );
 
-    return result?.api.getPoolByTokenPair || {};
+    return result?.item || result || {};
   }
 
   // TODO: fetch pool by tokenPair Addresses and fee rate
@@ -165,13 +156,10 @@ export default class Pool {
   }
 
   async fetchTicks({ poolId }: { poolId: string }) {
-    const ret: any = await this._sdk.requestModule.queryIndexer({
-      document: QueryTickChart,
-      variables: {
-        poolId,
-      },
-    });
-    return ret?.api?.getLiquidityAccumulation || [];
+    const ret: any = await this._sdk.requestModule.get(
+      `/base/data/pools/${poolId}/liquidity-accumulation`
+    );
+    return ret?.items || [];
   }
 
   // TODO: return data type in docs

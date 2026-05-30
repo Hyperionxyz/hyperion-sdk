@@ -3,7 +3,7 @@
   "version": "0.1.23",
   "private": true,
   "scripts": {
-    "dev": "next dev --experimental-https --turbopack -p 3001",
+    "dev": "next dev --experimental-https -p 3001",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

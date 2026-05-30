@@ -1,44 +1,41 @@
-import request, { RequestDocument, Variables } from "graphql-request";
+type QueryParams = Record<string, boolean | number | string | undefined>;
+
+function normalizeAPIHost(url: string) {
+  return url.replace(/\/v1\/graphql\/?$/, "").replace(/\/$/, "");
+}
 
 export class RequestModule {
-  protected _indexerURL: string;
+  protected _apiHost: string;
 
-  protected _officialIndexerURL: string;
-
-  constructor(opt: { indexerURL: string; officialIndexerURL: string }) {
-    this._indexerURL = opt.indexerURL;
-    this._officialIndexerURL = opt.officialIndexerURL;
+  constructor(opt: { indexerURL: string }) {
+    this._apiHost = normalizeAPIHost(opt.indexerURL);
   }
 
-  async queryIndexer({
-    document,
-    variables = {},
-  }: {
-    document: RequestDocument;
-    variables?: Variables;
-  }) {
-    return await request({
-      url: this._indexerURL,
-      document,
-      variables,
+  async get<T>(path: string, params: QueryParams = {}): Promise<T> {
+    const url = new URL(path, `${this._apiHost}/`);
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined) {
+        url.searchParams.set(key, value.toString());
+      }
     });
-  }
 
-  async queryOfficialIndexer({
-    document,
-    variables = {},
-  }: {
-    document: RequestDocument;
-    variables?: Variables;
-  }) {
-    return await request({
-      url: this._officialIndexerURL,
-      document,
-      variables,
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
+
+    if (!response.ok) {
+      throw new Error(
+        `Hyperion API request failed: ${response.status} ${response.statusText}`
+      );
+    }
+
+    return await response.json();
   }
 
   get indexerURL() {
-    return this._indexerURL;
+    return this._apiHost;
   }
 }

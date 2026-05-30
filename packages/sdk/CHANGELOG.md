@@ -1,5 +1,20 @@
 # @hyperion/sdk
 
+## 0.1.0
+
+### Minor Changes
+
+- Replace Hyperion indexer reads with REST API endpoints for pools, ticks, positions, and claimed rewards.
+- Remove the SDK runtime dependency on `graphql-request`.
+- Remove public GraphQL request helpers from `RequestModule`; SDK consumers should use the high-level `Pool`, `Position`, `Reward`, and `Swap` modules instead.
+
+### Compatibility Notes
+
+- Public high-level SDK methods keep the same call signatures for pool, position, reward, and swap workflows.
+- `SDKOptions.officialFullNodeIndexerURL` was removed because the SDK no longer performs official indexer GraphQL requests.
+- `SDKOptions.hyperionFullNodeIndexerURL` now points to the Hyperion API host. Existing values ending in `/v1/graphql` are normalized for compatibility, but new integrations should pass `https://api.hyperion.xyz`
+- If your integration called `requestModule.queryIndexer` or imported files from `src/config/queries`, replace that usage with the matching high-level SDK method or call the REST API directly.
+
 ## 0.0.25
 
 ### Patch Changes

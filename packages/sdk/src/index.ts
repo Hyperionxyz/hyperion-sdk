@@ -18,8 +18,6 @@ export type SDKOptions = {
   hyperionFullNodeIndexerURL: string;
   // Hyperion API Host
   hyperionAPIHost: string;
-  // Official FullNode Indexer URL
-  officialFullNodeIndexerURL: string;
   // API Key of Aptos
   APTOS_API_KEY: string;
 };
@@ -44,7 +42,6 @@ export class HyperionSDK {
 
     this._requestModule = new RequestModule({
       indexerURL: this._options.hyperionFullNodeIndexerURL,
-      officialIndexerURL: this._options.officialFullNodeIndexerURL,
     });
 
     this._pool = new Pool(this);

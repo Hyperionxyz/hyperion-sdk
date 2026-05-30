@@ -3,17 +3,12 @@ import { TokenPairs } from "aptos-tool";
 import BigNumber from "bignumber.js";
 import { HyperionSDK } from "..";
 import {
-  QueryAllPositionByAddress,
-  QueryPoolInfoByObjectId,
-} from "../config/queries/pool.query";
-import {
   currencyCheck,
   POOL_STABLE_TYPE,
   poolDeadline,
   slippageCalculator,
   slippageCheck,
 } from "../utils";
-import { QueryClaimedFee } from "./../config/queries/reward.query";
 BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 
 export interface AddLiquidityTransactionPayloadArgs {
@@ -46,24 +41,22 @@ export class Position {
   }
 
   async fetchAllPositionsByAddress({ address }: { address: string }) {
-    const ret: any = await this._sdk.requestModule.queryIndexer({
-      document: QueryAllPositionByAddress,
-      variables: {
-        address,
-      },
-    });
-    return ret?.api?.getPositionStatsByAddress || [];
+    const ret: any = await this._sdk.requestModule.get(
+      "/base/data/positions",
+      { address }
+    );
+    return Array.isArray(ret) ? ret : ret?.items || [];
   }
 
   async fetchPositionById(args: { positionId: string; address: string }) {
-    const ret: any = await this._sdk.requestModule.queryIndexer({
-      document: QueryPoolInfoByObjectId,
-      variables: {
+    const ret: any = await this._sdk.requestModule.get(
+      "/base/data/liquidity/ownerships",
+      {
         objectId: args.positionId,
         ownerAddress: args.address,
-      },
-    });
-    return ret?.objectOwnership || [];
+      }
+    );
+    return ret?.items || [];
   }
 
   /**
@@ -73,15 +66,15 @@ export class Position {
    * @returns
    */
   async fetchFeeHistory(args: { positionId: string; address: string }) {
-    const ret: any = await this._sdk.requestModule.queryIndexer({
-      document: QueryClaimedFee,
-      variables: {
+    const ret: any = await this._sdk.requestModule.get(
+      "/base/data/rewards/claimed-fees",
+      {
         objectId: args.positionId,
         ownerAddress: args.address,
-      },
-    });
+      }
+    );
 
-    return ret.rewardStatement?.filter((item: any) => {
+    return ret?.items?.filter((item: any) => {
       return !new BigNumber(item.amount).isEqualTo(0);
     });
   }

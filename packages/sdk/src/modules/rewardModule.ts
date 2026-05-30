@@ -1,6 +1,5 @@
 import BigNumber from "bignumber.js";
 import { HyperionSDK } from "..";
-import { QueryClaimedRewards } from "../config/queries/reward.query";
 
 BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 
@@ -26,15 +25,15 @@ export class Reward {
    * @returns
    */
   async fetchRewardHistory(args: { positionId: string; address: string }) {
-    const ret: any = await this._sdk.requestModule.queryIndexer({
-      document: QueryClaimedRewards,
-      variables: {
+    const ret: any = await this._sdk.requestModule.get(
+      "/base/data/rewards/claimed-farms",
+      {
         objectId: args.positionId,
         ownerAddress: args.address,
-      },
-    });
+      }
+    );
 
-    return ret.rewardStatement?.filter((item: any) => {
+    return ret?.items?.filter((item: any) => {
       return !new BigNumber(item.amount).isEqualTo(0);
     });
   }
