@@ -50,6 +50,7 @@ export default function BridgePage() {
   } = useBridgeWallets(selectedTokenIndex);
 
   const selectedToken = TOKENS[selectedTokenIndex];
+  const aptosAddress = account?.address?.toString() ?? "";
 
   // BSC write contract hook
   const {
@@ -77,7 +78,7 @@ export default function BridgePage() {
   });
 
   const handleGetQuote = async () => {
-    if (direction === "aptos-to-bsc" && !account?.address) {
+    if (direction === "aptos-to-bsc" && !aptosAddress) {
       setError("Please connect your Aptos wallet first");
       return;
     }
@@ -107,7 +108,7 @@ export default function BridgePage() {
     try {
       const token = TOKENS[selectedTokenIndex];
       const senderAddress =
-        direction === "aptos-to-bsc" ? account?.address : bscAddress;
+        direction === "aptos-to-bsc" ? aptosAddress : bscAddress;
       const args = {
         token,
         amount,
@@ -140,7 +141,7 @@ export default function BridgePage() {
 
       if (direction === "aptos-to-bsc") {
         result = await executeAptosPayload(quoteResult, "view");
-        if (result) {
+        if (Array.isArray(result)) {
           setRealQuoteResult(result);
           setSuccessMessage(
             `Aptos quote executed successfully! Result: [${result.join(", ")}] - Now you can create bridge payload with real quote data.`
@@ -165,7 +166,7 @@ export default function BridgePage() {
   };
 
   const handleCreateBridgePayload = async () => {
-    if (direction === "aptos-to-bsc" && !account?.address) {
+    if (direction === "aptos-to-bsc" && !aptosAddress) {
       setError("Please connect your Aptos wallet first");
       return;
     }
@@ -193,7 +194,7 @@ export default function BridgePage() {
     try {
       const token = TOKENS[selectedTokenIndex];
       const senderAddress =
-        direction === "aptos-to-bsc" ? account!.address : bscAddress!;
+        direction === "aptos-to-bsc" ? aptosAddress : bscAddress!;
       const args = {
         token,
         amount,
@@ -276,8 +277,8 @@ export default function BridgePage() {
     setTimeout(() => {
       if (direction === "aptos-to-bsc" && bscAddress) {
         setRecipient(bscAddress);
-      } else if (direction === "bsc-to-aptos" && account?.address) {
-        setRecipient(account.address);
+      } else if (direction === "bsc-to-aptos" && aptosAddress) {
+        setRecipient(aptosAddress);
       }
     }, 0);
   };
@@ -295,14 +296,14 @@ export default function BridgePage() {
   const handleAutoFillRecipient = () => {
     if (direction === "aptos-to-bsc" && bscAddress) {
       setRecipient(bscAddress);
-    } else if (direction === "bsc-to-aptos" && account?.address) {
-      setRecipient(account.address);
+    } else if (direction === "bsc-to-aptos" && aptosAddress) {
+      setRecipient(aptosAddress);
     }
   };
 
   const canAutoFillRecipient =
     (direction === "aptos-to-bsc" && !!bscAddress) ||
-    (direction === "bsc-to-aptos" && !!account?.address);
+    (direction === "bsc-to-aptos" && !!aptosAddress);
 
   // Handle BSC transaction status updates
   useEffect(() => {
@@ -331,10 +332,10 @@ export default function BridgePage() {
     setRecipient("");
     if (direction === "aptos-to-bsc" && bscAddress) {
       setRecipient(bscAddress);
-    } else if (direction === "bsc-to-aptos" && account?.address) {
-      setRecipient(account.address);
+    } else if (direction === "bsc-to-aptos" && aptosAddress) {
+      setRecipient(aptosAddress);
     }
-  }, [direction]);
+  }, [direction, aptosAddress, bscAddress]);
 
   useEffect(() => {
     if (direction === "aptos-to-bsc" && bscAddress && !recipient) {
@@ -343,10 +344,10 @@ export default function BridgePage() {
   }, [bscAddress]);
 
   useEffect(() => {
-    if (direction === "bsc-to-aptos" && account?.address && !recipient) {
-      setRecipient(account.address);
+    if (direction === "bsc-to-aptos" && aptosAddress && !recipient) {
+      setRecipient(aptosAddress);
     }
-  }, [account?.address]);
+  }, [aptosAddress, direction, recipient]);
 
   return (
     <>
