@@ -1,6 +1,6 @@
 {
   "name": "@hyperionxyz/bridge",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
@@ -38,7 +38,7 @@
     "buffer": "^6.0.3"
   },
   "peerDependencies": {
-    "@aptos-labs/ts-sdk": "^5.2.1"
+    "@aptos-labs/ts-sdk": "^5.2.1 || ^6.0.0 || ^7.0.0"
   },
   "publishConfig": {
     "access": "public",
