@@ -1,6 +1,6 @@
 {
   "name": "@hyperionxyz/sdk",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
@@ -38,8 +38,10 @@
     "long": "^5.3.1"
   },
   "peerDependencies": {
-    "@aptos-labs/ts-sdk": "latest",
-    "@aptos-labs/script-composer-sdk": "0.3.1"
+    "@aptos-labs/aptos-dynamic-transaction-composer": "^0.1.7",
+    "@aptos-labs/script-composer-pack": "^0.2.4",
+    "@aptos-labs/script-composer-sdk": "0.3.5",
+    "@aptos-labs/ts-sdk": "^5.2.1 || ^6.0.0 || ^7.0.0"
   },
   "publishConfig": {
     "access": "public",

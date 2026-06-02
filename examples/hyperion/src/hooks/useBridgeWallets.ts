@@ -14,10 +14,11 @@ export const useBridgeWallets = (selectedTokenIndex: number) => {
 
   const aptos = new Aptos(new AptosConfig({ network: Network.MAINNET }));
   const selectedToken = TOKENS[selectedTokenIndex];
+  const aptosAddress = account?.address?.toString() ?? "";
 
   // Get Aptos balance
   const getAptosBalance = async () => {
-    if (!account?.address) return;
+    if (!aptosAddress) return;
 
     try {
       setBalanceLoading(true);
@@ -25,7 +26,7 @@ export const useBridgeWallets = (selectedTokenIndex: number) => {
         options: {
           where: {
             owner_address: {
-              _eq: account.address,
+              _eq: aptosAddress,
             },
             asset_type: {
               _eq: selectedToken.chain.aptos.address,
@@ -84,15 +85,15 @@ export const useBridgeWallets = (selectedTokenIndex: number) => {
 
   // Update balances when token or addresses change
   useEffect(() => {
-    if (account?.address) {
+    if (aptosAddress) {
       getAptosBalance();
     } else {
       setAptosBalance("0");
     }
-  }, [account?.address, selectedTokenIndex]);
+  }, [aptosAddress, selectedTokenIndex]);
 
   const executeAptosPayload = async (payload: any, type: "view" | "transaction") => {
-    if (!account?.address) {
+    if (!aptosAddress) {
       throw new Error("Please connect your Aptos wallet first");
     }
 
@@ -127,7 +128,7 @@ export const useBridgeWallets = (selectedTokenIndex: number) => {
     refreshAptosBalance: getAptosBalance,
     
     // Wallet check helpers
-    isAptosConnected: !!account?.address,
+    isAptosConnected: !!aptosAddress,
     isBscWalletConnected: !!bscAddress,
   };
 };

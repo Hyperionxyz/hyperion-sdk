@@ -7,6 +7,7 @@ import { Badge } from "./ui/badge";
 export function AutoConnectStatus() {
   const { autoConnect } = useAutoConnect();
   const { account, connected } = useWallet();
+  const address = account?.address?.toString();
 
   if (process.env.NODE_ENV !== 'development') {
     return null; // Only show in development
@@ -27,9 +28,9 @@ export function AutoConnectStatus() {
           {connected ? "YES" : "NO"}
         </Badge>
       </div>
-      {account?.address && (
+      {address && (
         <div className="text-gray-600">
-          Address: {account.address.slice(0, 8)}...
+          Address: {address.slice(0, 8)}...
         </div>
       )}
     </div>

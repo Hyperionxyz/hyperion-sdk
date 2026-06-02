@@ -8,11 +8,8 @@ import { useAutoConnect } from "./AutoConnectProvider";
 export const WalletProvider = ({ children }: PropsWithChildren) => {
   const { autoConnect } = useAutoConnect();
 
-  const wallets: any[] = [];
-
   return (
     <AptosWalletAdapterProvider
-      plugins={wallets}
       autoConnect={autoConnect}
       dappConfig={{
         network: Network.TESTNET,

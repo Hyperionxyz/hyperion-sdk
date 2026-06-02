@@ -1,5 +1,17 @@
 # @hyperion/sdk
 
+## 0.1.2
+
+### Patch Changes
+
+- Allow Aptos TypeScript SDK 7 peer dependency compatibility.
+
+## 0.1.1
+
+### Patch Changes
+
+- Update Aptos package compatibility and wallet adapter integration.
+
 ## 0.1.0
 
 ### Minor Changes

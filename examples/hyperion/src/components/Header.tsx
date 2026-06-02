@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { copy } from "@/lib/utils";
-import { useWallet, WalletName } from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { Utils } from "aptos-tool";
 import { Copy, LogOut } from "lucide-react";
 import { Badge } from "./ui/badge";
@@ -19,13 +19,14 @@ import { useEffect } from "react";
 export function Header() {
   const { account, disconnect, connect, wallets, network } = useWallet();
   const { setAutoConnect } = useAutoConnect();
+  const address = account?.address?.toString() ?? "";
 
   // Enable auto-connect when user manually connects
   useEffect(() => {
-    if (account?.address) {
+    if (address) {
       setAutoConnect(true);
     }
-  }, [account?.address, setAutoConnect]);
+  }, [address, setAutoConnect]);
 
   const handleDisconnect = () => {
     setAutoConnect(false);
@@ -35,7 +36,7 @@ export function Header() {
   const handleConnect = async () => {
     try {
       console.log("Header: Attempting to connect wallet...");
-      await connect("Petra" as WalletName);
+      await connect("Petra");
       setAutoConnect(true);
       console.log("Header: Wallet connected successfully, autoConnect enabled");
     } catch (error) {
@@ -62,16 +63,16 @@ export function Header() {
       </div>
 
       <div className='py-3 font-semibold'>
-        {account?.address ? (
+        {address ? (
           <div className='flex gap-2 items-center'>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button className='font-semibold'>
-                  {Utils.ShortAddress(account?.address?.toString() || "")}
+                  {Utils.ShortAddress(address)}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className='text-xs'>
-                <DropdownMenuItem onClick={() => copy(account?.address)}>
+                <DropdownMenuItem onClick={() => copy(address)}>
                   <Copy size={14} />
                   Copy Address
                 </DropdownMenuItem>
